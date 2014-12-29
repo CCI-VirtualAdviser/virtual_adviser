@@ -1,0 +1,28 @@
+<!DOCTYPE html>   
+<!-- This is a html file for logging in to the virtual adviser -->
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"> 
+
+	<head>
+		<meta charset="UTF-8">
+		<title> Virtual Adviser Login</title>
+		<link rel="stylesheet" type="text/css" media='screen' href="css/login.screen.css">
+	</head>
+	<body>
+		<!-- The div that displays the login form-->
+		<div class="login">
+			<h1><strong>Welcome to the CCI Virtual Adviser</strong></h1>
+			<form action="validateLogin.php" method="POST">
+			<fieldset>
+			<label for="user">Username</label>
+			<p><input type="text" required id = "user" name = "Username" value=""></p>
+			<label for="pass">Password</label>
+			<p><input type="password" required id = "pass" name = "Password" value=""></p>
+			<!-- <p><a href="#">Forgot Password?</a></p> -->
+			<p><input type="submit" value="Login"></p>
+			</fieldset>
+			</form>
+			<!-- include the uncc white crown logo with green background -->
+			<img src="images/CrownLogo_White.png" alt="UNCC Logo" style="width:194px;height:97px" class = "center">
+		</div>
+	</body>
+</html>
