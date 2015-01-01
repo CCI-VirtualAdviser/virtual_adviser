@@ -380,6 +380,9 @@ if($rows > 0)
 		<meta charset="UTF-8">
 		<title> Virtual Adviser</title>
 		<link rel="stylesheet" type="text/css" media='screen' href="css/student.screen.css">
+        <script> sr</script>
+        <script src="js/jquery.jsj"></script>
+        <script src="js/progressbar.js"></script>
 	</head>
 	<body>
 		<!-- The div that displays the welcome message-->
@@ -393,6 +396,9 @@ if($rows > 0)
 			<p>Your concentration is <?php echo $concentration ?></p>
 			<p>Total major hours: <?php echo $major_hours ?>  Total Completed: <?php echo $completed_major_hours ?></p>
 			<p>Completed major percentage: <?php echo $completed_major_percent ?>%</p>
+            <p class="alignleft">MAJOR</p>
+            <div id="progressBar" class = "alignright"><div><script>progress(<?php echo $completed_major_percent ?>,$('#progressBar'));</script></div></div>
+            
 			<p>Math Option: <?php echo $math_option ?> Total hours: <?php echo $math_hours ?> Completed: <?php echo $completed_math_hours ?></p>
 			<p>Completed math percentage: <?php echo $completed_math_percent ?>%</p>
 			<p>Total science hours: <?php echo $science_hours ?>  Total Completed: <?php echo $completed_science_hours ?></p>

@@ -58,6 +58,21 @@ label {
 
 /*========== IDs ========== */
 
+#progressBar {
+        width: 400px;
+        height: 22px;
+        border: 1px solid #111;
+        background-color: #292929;
+}
+ 
+#progressBar div {
+        height: 100%;
+        color: #fff;
+        text-align: right;
+        line-height: 22px; /* same as #progressBar height if we want text middle aligned */
+        width: 0;
+        background-color: #0099ff;
+}
 
 /*========= CLASSES ======== */
 
@@ -78,6 +93,14 @@ img.center {
 	text-align: center;
 	/* set margins to offset 50% of the width and height */
 	margin: -375px 0 0 -350px;
+}
+
+.alignleft {
+    float: left;
+}
+
+.alignright {
+    float: right;
 }
 
 
