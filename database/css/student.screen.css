@@ -83,7 +83,7 @@ img.center {
 }
 
 .welcome {
-	height: 750px;
+	height: 950px;
 	width: 700px;
 	position: absolute;
 	left: 50%;
@@ -92,10 +92,12 @@ img.center {
 	border-radius: 10px; 
 	text-align: center;
 	/* set margins to offset 50% of the width and height */
-	margin: -375px 0 0 -350px;
+	margin: -475px 0 0 -350px;
 }
 
 .alignleft {
+    color: ffffff;
+    padding-left: 50px;
     float: left;
 }
 
@@ -103,6 +105,17 @@ img.center {
     float: right;
 }
 
-
+.bardiv {
+    color: ffffff;
+    height: 400px;
+    width: 700px;
+	position: absolute;
+    border-radius: 10px;
+    text-align: left;
+    padding-top: 10px;
+    padding-right: 10px;
+    padding-left: 10px;
+    padding-bottom: 10px;
+}
 
 

@@ -388,17 +388,18 @@ if($rows > 0)
 		<!-- The div that displays the welcome message-->
 		<div class="welcome">
 			<h1><strong>Welcome, <?php echo $_SESSION['name'] ?>, I'm Professor Bruce, your Virtual Adviser</strong></h1>
-			
-			<!-- include the uncc white crown logo with green background -->
-			<img src="images/CrownLogo_White.png" alt="UNCC Logo" style="width:194px;height:97px" class = "center">
-			<hr />
-			<p>Your degree program is <?php echo $program ?></p> 
+            <hr/>
+            <div class = "bardiv">
+                <p class = "alignleft">MAJOR</p>
+                <div id="progressBar" class = "alignright">
+                    <div><script>progress(<?php echo $completed_major_percent ?>,$('#progressBar'));</script></div>
+                </div>
+            </div> <!-- end bardiv class div -->
+            <!--
+            <p>Your degree program is <?php echo $program ?></p> 
 			<p>Your concentration is <?php echo $concentration ?></p>
 			<p>Total major hours: <?php echo $major_hours ?>  Total Completed: <?php echo $completed_major_hours ?></p>
 			<p>Completed major percentage: <?php echo $completed_major_percent ?>%</p>
-            <p class="alignleft">MAJOR</p>
-            <div id="progressBar" class = "alignright"><div><script>progress(<?php echo $completed_major_percent ?>,$('#progressBar'));</script></div></div>
-            
 			<p>Math Option: <?php echo $math_option ?> Total hours: <?php echo $math_hours ?> Completed: <?php echo $completed_math_hours ?></p>
 			<p>Completed math percentage: <?php echo $completed_math_percent ?>%</p>
 			<p>Total science hours: <?php echo $science_hours ?>  Total Completed: <?php echo $completed_science_hours ?></p>
@@ -408,7 +409,12 @@ if($rows > 0)
 			<p>Total liberal education hours: <?php echo $liberal_hours ?>  Total Completed: <?php echo $completed_liberal_hours ?></p>
 			<p>Completed liberal education percentage: <?php echo $completed_liberal_percent ?>%</p>
 			<p>Total communications hours: <?php echo $communication_hours ?>  Total Completed: <?php echo $completed_communication_hours ?></p>
-			<p>Completed communications percentage: <?php echo $completed_communication_percent ?>%</p>
-		</div>
+			<p>Completed communications percentage: <?php echo $completed_communication_percent ?>%</p> -->
+			<!-- include the uncc white crown logo with green background -->
+			<hr />
+            <img src="images/CrownLogo_White.png" alt="UNCC Logo" style="width:194px;height:97px" class = "center">
+            
+        </div> <!-- end welcome class div -->
+        
 	</body>
 </html>
