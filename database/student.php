@@ -391,9 +391,35 @@ if($rows > 0)
             <hr/>
             <div class = "bardiv">
                 <p class = "alignleft">MAJOR</p>
-                <div id="progressBar" class = "alignright">
+                <div id="progressBar" class = "alignleft">
                     <div><script>progress(<?php echo $completed_major_percent ?>,$('#progressBar'));</script></div>
                 </div>
+                <br>
+                <p class = "alignleft">MATH</p>
+                <div id="progressBar" class = "alignleft">
+                    <div><script>progress(<?php echo $completed_math_percent ?>,$('#progressBar'));</script></div>
+                </div>
+                <br>
+                <p class = "alignleft">SCIENCE</p>
+                <div id="progressBar" class = "alignleft">
+                    <div><script>progress(<?php echo $completed_science_percent ?>,$('#progressBar'));</script></div>
+                </div>
+                <br>
+                <p class = "alignleft">SOCIAL SCIENCE</p>
+                <div id="progressBar" class = "alignleft">
+                    <div><script>progress(<?php echo $completed_social_science_percent ?>,$('#progressBar'));</script></div>
+                </div>
+                <br>
+                <p class = "alignleft">LIBERAL STUDIES</p>
+                <div id="progressBar" class = "alignleft">
+                    <div><script>progress(<?php echo $completed_liberal_percent ?>,$('#progressBar'));</script></div>
+                </div>
+                <br>
+                <p class = "alignleft">COMMUNICATIONS</p>
+                <div id="progressBar" class = "alignleft">
+                    <div><script>progress(<?php echo $completed_communication_percent ?>,$('#progressBar'));</script></div>
+                </div>
+                <br>
             </div> <!-- end bardiv class div -->
             <!--
             <p>Your degree program is <?php echo $program ?></p> 
