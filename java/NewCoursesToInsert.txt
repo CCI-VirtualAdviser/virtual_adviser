@@ -1,0 +1,10 @@
+/* These courses have been inserted! */
+
+CHEM 1112,Chemistry in Today`s Society, 3
+ENGL 4116,Shakespeare`s Early Plays, 3
+ENGL 4117,Shakespeare`s Late Plays, 3
+NURS 4191,Women`s Health Issues, 3
+WGST 1101,Introduction to Women`s Studies, 3 
+WGST 2050,Topics in Women`s Studies, 3
+WGST 3050,Topics in Women`s Studies, 3 
+WGST 3102,Changing Realities of Women`s Lives, 3

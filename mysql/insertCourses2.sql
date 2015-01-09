@@ -14,8 +14,8 @@ SET SQL_MODE = '';
 
 -- Updates to ITCS and ITIS courses added since 2009-2010
 INSERT INTO course_list (dept_id,course_id,course_name,credit_hours) 
-VALUES ('ITCS','1200','Freshman Seminar','3'),
-	('ITCS','1212','Introduction To Computer Science','4'),
+VALUES 
+	-- ('ITCS','1212','Introduction To Computer Science','4'),
 	('ITCS','1213','Introduction To Computer Science II','4'),
 	('ITCS','1600','Computing Professionals','1'),
 	('ITCS','1610','Computing Applications Seminar','3'),
@@ -25,8 +25,8 @@ VALUES ('ITCS','1200','Freshman Seminar','3'),
 	('ITCS','3610','Computing Leaders Seminar','3'),
 	('ITCS','4180','Mobile Application Development','3'),
 	('ITCS','4490','Professional Internship','0'),
-	('ITCS','4650','Senior Project I','3'),
-	('ITCS','4651','Senior Project II','3'),
+-- ('ITCS','4650','Senior Project I','3'),
+-- ('ITCS','4651','Senior Project II','3'),
 
 	('ITIS','1350','eScience','4'),
 	('ITIS','1350L','eScience Laboratory','0'),
@@ -43,7 +43,8 @@ VALUES ('ITCS','1200','Freshman Seminar','3'),
 INSERT INTO Course_List (dept_id,course_id,course_name,credit_hours) VALUES ('ITIS','3300','Software Requirements and Project Management',3);
 
 INSERT INTO course_list (dept_id,course_id,course_name,credit_hours) 
-VALUES ('ITCS','1212L','Programming Lab I','0'),
+VALUES 
+-- ('ITCS','1212L','Programming Lab I','0'),
 	('ITCS','1213L','Programming Lab II','0');
 
 INSERT INTO course_list (dept_id,course_id,course_name,credit_hours) 
@@ -54,7 +55,7 @@ INSERT INTO Course_List (dept_id,course_id,course_name,credit_hours) VALUES ('IT
 
 INSERT INTO course_list (dept_id,course_id,course_name,credit_hours) 
 VALUES ('PHIL','1106','Critical Thinking','3'),
-	('MATH','1121','Calculus for Engineering Technology','3'),
+-- ('MATH','1121','Calculus for Engineering Technology','3'),
 	('ITCS','2600','Computing Professionals (Transfer)','3'),
 	('ITIS','2600','Computing Professionals (Transfer)','3');
 
