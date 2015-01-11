@@ -5,7 +5,7 @@ session_start();
 $username = 'root';
 $password = 'root';
 $url = 'localhost';
-$database = 'virtual_adviser';
+$database = 'virtual_adviser2';
 
 /*	Note that above variables are using single quote for string. When they
 	get replaced in the connection statement below, single quotes within
