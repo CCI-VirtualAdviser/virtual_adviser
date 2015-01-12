@@ -1,9 +1,9 @@
 use virtual_adviser;
 
 -- inserting a fake advsisers for fake students
-INSERT INTO advisers VALUES ('800000000','Ethel','Mertz','Ethel.Mertz@uncc.edu','emertz','Shorty2014!');
-INSERT INTO advisers VALUES ('800000001','Lucille','Ball','Lucille.Ball@uncc.edu','lball','AbFab99!');
-INSERT INTO advisers VALUES ('800000002','Ricky','Ricardo','Ricky.Ricardo@uncc.edu','rricardo','Samba2014!');
+INSERT INTO advisers (adviser_id,first_name,last_name,email,username,password)VALUES ('800000000','Ethel','Mertz','Ethel.Mertz@uncc.edu','emertz','Shorty2014!');
+INSERT INTO advisers (adviser_id,first_name,last_name,email,username,password)VALUES ('800000001','Lucille','Ball','Lucille.Ball@uncc.edu','lball','AbFab99!');
+INSERT INTO advisers (adviser_id,first_name,last_name,email,username,password)VALUES ('800000002','Ricky','Ricardo','Ricky.Ricardo@uncc.edu','rricardo','Samba2014!');
 
 SELECT * FROM advisers;
 
@@ -31,7 +31,7 @@ INSERT INTO math_option VALUES ('800726004',1);
 INSERT INTO students VALUES('800726008','Laura','I.','Wilder','lwilder@uncc.edu','800000002','Bachelor of Arts','Information Technology',NULL,'lwilder','ILoveMyLittleHouse$1852');
 INSERT INTO math_option VALUES ('800726008',2);
 
-SELECT * FROM students;
+SELECT * FROM program_courses;
 
 
 -- inserting transfer courses into courses_taken for fake student Edith Piaf
