@@ -306,7 +306,7 @@ CREATE TABLE IF NOT EXISTS `virtual_adviser2`.`program_courses` (
   `fulfills_liberalEd` TINYINT(1) UNSIGNED NOT NULL,
   `fulfills_communications` TINYINT(1) UNSIGNED NOT NULL,
   `dept_id` VARCHAR(4) NOT NULL,
-  PRIMARY KEY (`program_id`, `concentration_id`, `dept_id`,`course_id`),
+  PRIMARY KEY (`program_id`, `concentration_id`, `dept_id`),
   INDEX `progam_id_idx` (`program_id` ASC),
   INDEX `concentration_id_idx` (`concentration_id` ASC),
   INDEX `course_id_idx` (`course_id` ASC),
