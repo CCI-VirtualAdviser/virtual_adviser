@@ -1,4 +1,4 @@
-use virtual_adviser;
+use virtual_adviser2;
 
 -- inserting a fake advsisers for fake students
 INSERT INTO advisers (adviser_id,first_name,last_name,email,username,password)VALUES ('800000000','Ethel','Mertz','Ethel.Mertz@uncc.edu','emertz','Shorty2014!');

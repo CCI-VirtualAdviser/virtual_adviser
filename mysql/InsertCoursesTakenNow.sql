@@ -12,8 +12,18 @@ insert into courses_taking_now (student_id,dept_id,course_id)
 	values ('800726001','ITIS','2110');
 insert into courses_taking_now (student_id,dept_id,course_id) 
 	values ('800726001','MATH','2164');
+insert into courses_taking_now (student_id,dept_id,course_id) 
+	values ('800726001','PHYS','1101');
+insert into courses_taking_now (student_id,dept_id,course_id) 
+	values ('800726001','PHYS','1101L');
+insert into courses_taking_now (student_id,dept_id,course_id) 
+	values ('800726001','SOCY','1101');
+insert into courses_taking_now (student_id,dept_id,course_id) 
+	values ('800726001','LBST','2215');
+insert into courses_taking_now (student_id,dept_id,course_id) 
+	values ('800726001','ITCS','3688');
 
 
-select * from courses_taken where student_id = '800726001';
 
-drop table program_courses;
+select *  from program_courses where dept_id = 'ITCS' and course_id = '3688';
+
