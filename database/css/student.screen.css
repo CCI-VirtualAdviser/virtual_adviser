@@ -58,6 +58,23 @@ label {
 
 /*========== IDs ========== */
 
+#progressBar {
+        width: 400px;
+        height: 22px;
+        border: 1px solid #111;
+        background-color: #292929;
+        display: inline;
+}
+ 
+#progressBar div {
+        height: 100%;
+        color: #fff;
+        text-align: right;
+        line-height: 22px; /* same as #progressBar height if we want text middle aligned */
+        width: 0;
+        background-color: #0099ff;
+        display: inline;
+}
 
 /*========= CLASSES ======== */
 
@@ -68,7 +85,7 @@ img.center {
 }
 
 .welcome {
-	height: 750px;
+	height: 460px;
 	width: 700px;
 	position: absolute;
 	left: 50%;
@@ -77,9 +94,32 @@ img.center {
 	border-radius: 10px; 
 	text-align: center;
 	/* set margins to offset 50% of the width and height */
-	margin: -375px 0 0 -350px;
+	margin: -230px 0 0 -350px;
 }
 
+.alignleft {
+    color: ffffff;
+    padding-left: 20px; 
+    padding-right: 10%; 
+    text-align: left;
+    display: inline;
+}
 
+.alignright {
+    float: right;
+}
+
+.bardiv {
+    color: ffffff;
+    height: 250px;
+    width: 700px;
+	position: relative;
+    border-radius: 10px;
+    text-align: left;
+    padding-top: 10px;
+    padding-right: 10px;
+    padding-left: 10px;
+    padding-bottom: 10px;
+}
 
 

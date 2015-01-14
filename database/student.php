@@ -4,6 +4,10 @@ $username = 'root';
 $password = 'root';
 $url = 'localhost';
 $database = 'virtual_adviser2';
+<<<<<<< HEAD
+=======
+
+>>>>>>> feature/progressBar
 /*	Note that above variables are using single quote for string. When they
 	get replaced in the connection statement below, single quotes within
 	single quotes will fail, therefore, the string argument in $conn= statement
@@ -533,49 +537,67 @@ if($rows > 0)
                 <div id="progressBar" class = "alignleft">
                     <div><script>progress(<?php echo $completed_major_percent ?>,$('#progressBar'));</script></div>
                 </div>
+<<<<<<< HEAD
                 <div id="progressBar" class = "alignleft">
                     <div><script>progress(<?php echo $taking_now_major_percent ?>,$('#progressBar'));</script></div>
                 </div>
+=======
+>>>>>>> feature/progressBar
                 <br>
                 <p class = "alignleft">MATH</p>
                 <div id="progressBar" class = "alignleft">
                     <div><script>progress(<?php echo $completed_math_percent ?>,$('#progressBar'));</script></div>
                 </div>
+<<<<<<< HEAD
                 <div id="progressBar" class = "alignleft">
                     <div><script>progress(<?php echo $taking_now_math_percent ?>,$('#progressBar'));</script></div>
                 </div>
+=======
+>>>>>>> feature/progressBar
                 <br>
                 <p class = "alignleft">SCIENCE</p>
                 <div id="progressBar" class = "alignleft">
                     <div><script>progress(<?php echo $completed_science_percent ?>,$('#progressBar'));</script></div>
                 </div>
+<<<<<<< HEAD
                 <div id="progressBar" class = "alignleft">
                     <div><script>progress(<?php echo $taking_now_science_percent ?>,$('#progressBar'));</script></div>
                 </div>
+=======
+>>>>>>> feature/progressBar
                 <br>
                 <p class = "alignleft">SOCIAL SCIENCE</p>
                 <div id="progressBar" class = "alignleft">
                     <div><script>progress(<?php echo $completed_social_science_percent ?>,$('#progressBar'));</script></div>
                 </div>
+<<<<<<< HEAD
                 <div id="progressBar" class = "alignleft">
                     <div><script>progress(<?php echo $taking_now_social_science_percent ?>,$('#progressBar'));</script></div>
                 </div>
+=======
+>>>>>>> feature/progressBar
                 <br>
                 <p class = "alignleft">LIBERAL STUDIES</p>
                 <div id="progressBar" class = "alignleft">
                     <div><script>progress(<?php echo $completed_liberal_percent ?>,$('#progressBar'));</script></div>
                 </div>
+<<<<<<< HEAD
                 <div id="progressBar" class = "alignleft">
                     <div><script>progress(<?php echo $taking_now_liberal_percent ?>,$('#progressBar'));</script></div>
                 </div>
+=======
+>>>>>>> feature/progressBar
                 <br>
                 <p class = "alignleft">COMMUNICATIONS</p>
                 <div id="progressBar" class = "alignleft">
                     <div><script>progress(<?php echo $completed_communication_percent ?>,$('#progressBar'));</script></div>
                 </div>
+<<<<<<< HEAD
                 <div id="progressBar" class = "alignleft">
                     <div><script>progress(<?php echo $taking_now_communication_percent ?>,$('#progressBar'));</script></div>
                 </div>
+=======
+>>>>>>> feature/progressBar
                 <br>
             </div> <!-- end bardiv class div -->
             <!--
