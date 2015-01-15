@@ -78,7 +78,7 @@ if($rows > 0)
 								INNER JOIN (SELECT Course_List.course_id,credit_hours FROM Program_Courses, Course_List 
 								WHERE program_id=:pid AND concentration_id=:conid AND fulfills_major=1 AND Program_Courses.course_id = Course_List.course_id 
 								) AS b ON a.course_id = b.course_id
-								INNER JOIN (SELECT * FROM course_equivalence) as c ON c.course_sub = a.course_id");
+								INNER JOIN (SELECT * FROM course_equivalence) as c ON c.course_id = a.course_id");
 	$result->bindParam(':sid',$id);
 	$result->bindParam(':pid',$program);
 	$result->bindParam(':conid',$concentration);
@@ -164,7 +164,7 @@ if($rows > 0)
 								INNER JOIN (SELECT Course_List.course_id,credit_hours FROM Program_Courses, Course_List 
 								WHERE program_id=:pid AND concentration_id=:conid AND fulfills_math1=1 AND Program_Courses.course_id = Course_List.course_id 
 								) AS b ON a.course_id = b.course_id
-								INNER JOIN (SELECT * FROM course_equivalence) as c ON c.course_sub = a.course_id");
+								INNER JOIN (SELECT * FROM course_equivalence) as c ON c.course_id = a.course_id");
 	}
 	else
 	{
@@ -173,7 +173,7 @@ if($rows > 0)
 								INNER JOIN (SELECT Course_List.course_id,credit_hours FROM Program_Courses, Course_List 
 								WHERE program_id=:pid AND concentration_id=:conid AND fulfills_math2=1 AND Program_Courses.course_id = Course_List.course_id 
 								) AS b ON a.course_id = b.course_id
-								INNER JOIN (SELECT * FROM course_equivalence) as c ON c.course_sub = a.course_id");
+								INNER JOIN (SELECT * FROM course_equivalence) as c ON c.course_id = a.course_id");
 	}
 	$result->bindParam(':sid',$id);
 	$result->bindParam(':pid',$program);
@@ -183,8 +183,16 @@ if($rows > 0)
 	
 	//subtract the duplicate hours from the total hours completed in math option
 	$completed_major_hours -= $duplicate_hours;
-	
-	$completed_math_percent = number_format(($completed_math_hours/$math_hours)*100,2,'.','');
+    
+	if($math_hours == 0)
+    {
+        $completed_math_percent = 0;
+    }
+    else
+    {
+	   $completed_math_percent = number_format(($completed_math_hours/$math_hours)*100,2,'.','');
+    }
+    
 	if ($completed_math_percent > 100)
 	{
 		$completed_math_percent = number_format(100,2,'.','');
@@ -218,7 +226,7 @@ if($rows > 0)
 								INNER JOIN (SELECT Course_List.course_id,credit_hours FROM Program_Courses, Course_List 
 								WHERE program_id=:pid AND concentration_id=:conid AND fulfills_science=1 AND Program_Courses.course_id = Course_List.course_id 
 								) AS b ON a.course_id = b.course_id
-								INNER JOIN (SELECT * FROM course_equivalence) as c ON c.course_sub = a.course_id");
+								INNER JOIN (SELECT * FROM course_equivalence) as c ON c.course_id = a.course_id");
 	$result->bindParam(':sid',$id);
 	$result->bindParam(':pid',$program);
 	$result->bindParam(':conid',$concentration);
@@ -228,6 +236,19 @@ if($rows > 0)
 	//subtract the duplicate hours from the total hours completed in science
 	$completed_science_hours -= $duplicate_hours;
 	
+	if($science_hours == 0)
+    {
+        $completed_science_percent = 0;
+    }
+    else
+    {
+	   $completed_science_percent = number_format(($completed_science_hours/$science_hours)*100,2,'.','');
+    }
+    
+	if ($completed_math_percent > 100)
+	{
+		$completed_math_percent = number_format(100,2,'.','');
+	}
 	$completed_science_percent = number_format(($completed_science_hours/$science_hours)*100,2,'.','');
 	if ($completed_science_percent > 100)
 	{
@@ -257,7 +278,7 @@ if($rows > 0)
 								INNER JOIN (SELECT Course_List.course_id,credit_hours FROM Program_Courses, Course_List 
 								WHERE program_id=:pid AND concentration_id=:conid AND fulfills_social_science=1 AND Program_Courses.course_id = Course_List.course_id 
 								) AS b ON a.course_id = b.course_id
-								INNER JOIN (SELECT * FROM course_equivalence) as c ON c.course_sub = a.course_id");
+								INNER JOIN (SELECT * FROM course_equivalence) as c ON c.course_id = a.course_id");
 	$result->bindParam(':sid',$id);
 	$result->bindParam(':pid',$program);
 	$result->bindParam(':conid',$concentration);
@@ -267,7 +288,15 @@ if($rows > 0)
 	//subtract the duplicate hours from the total hours completed in major
 	$completed_social_science_hours -= $duplicate_hours;
 	
-	$completed_social_science_percent = number_format(($completed_social_science_hours/$social_science_hours)*100,2,'.','');
+	if($social_science_hours == 0)
+    {
+        $completed_social_science_percent = 0;
+    }
+    else
+    {
+	   $completed_social_science_percent = number_format(($completed_social_science_hours/$social_science_hours)*100,2,'.','');
+    }
+    
 	if ($completed_social_science_percent > 100)
 	{
 		$completed_social_science_percent = number_format(100,2,'.','');
@@ -298,7 +327,7 @@ if($rows > 0)
 								INNER JOIN (SELECT Course_List.course_id,credit_hours FROM Program_Courses, Course_List 
 								WHERE program_id=:pid AND concentration_id=:conid AND fulfills_liberalEd=1 AND Program_Courses.course_id = Course_List.course_id 
 								) AS b ON a.course_id = b.course_id
-								INNER JOIN (SELECT * FROM course_equivalence) as c ON c.course_sub = a.course_id");
+								INNER JOIN (SELECT * FROM course_equivalence) as c ON c.course_id = a.course_id");
 	$result->bindParam(':sid',$id);
 	$result->bindParam(':pid',$program);
 	$result->bindParam(':conid',$concentration);
@@ -308,8 +337,15 @@ if($rows > 0)
 	//subtract the duplicate hours from the total hours completed in major
 	$completed_liberal_hours -= $duplicate_hours;
 	
+    if($liberal_hours == 0)
+    {
+        $completed_liberal_percent = 0;
+    }
+    else
+    {
+	   $completed_liberal_percent = number_format(($completed_liberal_hours/$liberal_hours)*100,2,'.','');
+    }
 	
-	$completed_liberal_percent = number_format(($completed_liberal_hours/$liberal_hours)*100,2,'.','');
 	if ($completed_liberal_percent > 100)
 	{
 		$completed_liberal_percent = number_format(100,2,'.','');
@@ -345,7 +381,7 @@ if($rows > 0)
 								INNER JOIN (SELECT Course_List.course_id,credit_hours FROM Program_Courses, Course_List 
 								WHERE program_id=:pid AND concentration_id=:conid AND fulfills_communications=1 AND Program_Courses.course_id = Course_List.course_id 
 								) AS b ON a.course_id = b.course_id
-								INNER JOIN (SELECT * FROM course_equivalence) as c ON c.course_sub = a.course_id");
+								INNER JOIN (SELECT * FROM course_equivalence) as c ON c.course_id = a.course_id");
 	$result->bindParam(':sid',$id);
 	$result->bindParam(':pid',$program);
 	$result->bindParam(':conid',$concentration);
@@ -357,7 +393,15 @@ if($rows > 0)
 	
 	
 	//student cannot complete more than 100% of a program, so if the completed percentage is greater than 100 make it 100
-	$completed_communication_percent = number_format(($completed_communication_hours/$communication_hours)*100,2,'.','');
+	if($communication_hours == 0)
+    {
+        $completed_communication_percent = 0;
+    }
+    else
+    {
+	   $completed_communication_percent = number_format(($completed_communication_hours/$communication_hours)*100,2,'.','');
+    }
+    
 	if ($completed_communication_percent > 100)
 	{
 		$completed_communication_percent = number_format(100,2,'.','');
@@ -417,7 +461,15 @@ if($rows > 0)
 	$taking_now_math_hours = $result->fetchColumn();
     
     //student cannot complete more than 100% of a program, so if the completed percentage is greater than 100 make it 100
-	$taking_now_math_percent = number_format(($taking_now_math_hours/$math_hours)*100,2,'.','');
+	
+    if($math_hours == 0)
+    {
+        $taking_now_math_percent = 0;
+    }
+    else
+    {
+	   $taking_now_math_percent = number_format(($completed_social_science_hours/$social_science_hours)*100,2,'.','');
+    }
 	if ($taking_now_math_percent > 100)
 	{
 		$taking_now_math_percent = number_format(100,2,'.','');
@@ -439,7 +491,15 @@ if($rows > 0)
 	$taking_now_science_hours = $result->fetchColumn();
     
     //student cannot complete more than 100% of a program, so if the completed percentage is greater than 100 make it 100
-	$taking_now_science_percent = number_format(($taking_now_science_hours/$science_hours)*100,2,'.','');
+	if($science_hours == 0)
+    {
+        $taking_now_science_percent = 0;
+    }
+    else
+    {
+	   $taking_now_science_percent = number_format(($taking_now_science_hours/$science_hours)*100,2,'.','');
+    }
+
 	if ($taking_now_science_percent > 100)
 	{
 		$taking_now_science_percent = number_format(100,2,'.','');
@@ -461,7 +521,15 @@ if($rows > 0)
 	$taking_now_social_science_hours = $result->fetchColumn();
     
     //student cannot complete more than 100% of a program, so if the completed percentage is greater than 100 make it 100
-	$taking_now_social_science_percent = number_format(($taking_now_science_hours/$science_hours)*100,2,'.','');
+	if($social_science_hours == 0)
+    {
+        $taking_now_social_science_percent = 0;
+    }
+    else
+    {
+	   $taking_now_social_science_percent = number_format(($taking_now_social_science_hours/$social_science_hours)*100,2,'.','');
+    }
+
 	if ($taking_now_social_science_percent > 100)
 	{
 		$taking_now_social_science_percent = number_format(100,2,'.','');
@@ -482,7 +550,15 @@ if($rows > 0)
 	$taking_now_liberal_hours = $result->fetchColumn();
     
     //student cannot complete more than 100% of a program, so if the completed percentage is greater than 100 make it 100
-	$taking_now_liberal_percent = number_format(($taking_now_liberal_hours/$liberal_hours)*100,2,'.','');
+	if($liberal_hours == 0)
+    {
+        $taking_now_liberal_percent = 0;
+    }
+    else
+    {
+	   $taking_now_liberal_percent = number_format(($taking_now_liberal_hours/$liberal_hours)*100,2,'.','');
+    }
+
 	if ($taking_now_liberal_percent > 100)
 	{
 		$taking_now_liberal_percent = number_format(100,2,'.','');
@@ -510,7 +586,6 @@ if($rows > 0)
 	}
 		
 }
-
 //get the number of hours the student is planning taking toward their major
 	$result = $conn->prepare("SELECT(SUM(credit_hours)) AS hours FROM(
 								SELECT *
@@ -527,12 +602,19 @@ if($rows > 0)
 	$planning_major_hours = $result->fetchColumn();
     
     //student cannot complete more than 100% of a program, so if the completed percentage is greater than 100 make it 100
-	$planning_major_percent = number_format(($taking_now_major_hours/$major_hours)*100,2,'.','');
+	if($major_hours == 0)
+    {
+        $planning_major_percent = 0;
+    }
+    else
+    {
+	   $planning_major_percent = number_format(($planning_major_hours/$major_hours)*100,2,'.','');
+    }
+
 	if ($planning_major_percent > 100)
 	{
 		$planning_major_percent = number_format(100,2,'.','');
 	}
-
 //get number of hours student is planning toward their math option
 	if($math_option == 1)
 	{
@@ -564,12 +646,18 @@ if($rows > 0)
 	$taking_now_math_hours = $result->fetchColumn();
     
     //student cannot complete more than 100% of a program, so if the completed percentage is greater than 100 make it 100
-	$planning_math_percent = number_format(($taking_now_math_hours/$math_hours)*100,2,'.','');
+	if($math_hours == 0)
+    {
+        $planning_math_percent = 0;
+    }
+    else
+    {
+	   $planning_math_percent = number_format(($planning_math_hours/$math_hours)*100,2,'.','');
+    }
 	if ($planning_math_percent > 100)
 	{
 		$planning_math_percent = number_format(100,2,'.','');
 	}
-
 //get science hours planning
 	$result = $conn->prepare("SELECT(SUM(credit_hours)) AS hours FROM(
 								SELECT *
@@ -586,7 +674,14 @@ if($rows > 0)
 	$planning_science_hours = $result->fetchColumn();
     
     //student cannot complete more than 100% of a program, so if the completed percentage is greater than 100 make it 100
-	$planning_science_percent = number_format(($planning_science_hours/$science_hours)*100,2,'.','');
+	if($science_hours == 0)
+    {
+        $planning_science_percent = 0;
+    }
+    else
+    {
+	   $planning_science_percent = number_format(($planning_science_hours/$science_hours)*100,2,'.','');
+    }
 	if ($planning_science_percent > 100)
 	{
 		$planning_science_percent = number_format(100,2,'.','');
@@ -608,7 +703,14 @@ if($rows > 0)
 	$planning_social_science_hours = $result->fetchColumn();
     
     //student cannot complete more than 100% of a program, so if the completed percentage is greater than 100 make it 100
-	$planning_social_science_percent = number_format(($planning_science_hours/$science_hours)*100,2,'.','');
+	if($social_science_hours == 0)
+    {
+        $planning_social_science_percent = 0;
+    }
+    else
+    {
+	   $planning_social_science_percent = number_format(($planning_social_science_hours/$social_science_hours)*100,2,'.','');
+    }
 	if ($planning_social_science_percent > 100)
 	{
 		$planning_social_science_percent = number_format(100,2,'.','');
@@ -629,7 +731,14 @@ if($rows > 0)
 	$planning_liberal_hours = $result->fetchColumn();
     
     //student cannot complete more than 100% of a program, so if the completed percentage is greater than 100 make it 100
-	$planning_liberal_percent = number_format(($planning_liberal_hours/$liberal_hours)*100,2,'.','');
+	if($liberal_hours == 0)
+    {
+        $planning_liberal_percent = 0;
+    }
+    else
+    {
+	   $planning_liberal_percent = number_format(($planning_liberal_hours/$liberal_hours)*100,2,'.','');
+    }
 	if ($planning_liberal_percent > 100)
 	{
 		$planning_liberal_percent = number_format(100,2,'.','');
@@ -650,13 +759,19 @@ if($rows > 0)
 	$planning_communication_hours = $result->fetchColumn();
     
     //student cannot complete more than 100% of a program, so if the completed percentage is greater than 100 make it 100
-	$planning_communication_percent = number_format(($planning_communication_hours/$communication_hours)*100,2,'.','');
+	if($communication_hours == 0)
+    {
+        $planning_communication_percent = 0;
+    }
+    else
+    {
+	   $planning_communication_percent = number_format(($planning_communication_hours/$liberal_hours)*100,2,'.','');
+    }
 	if ($planning_communication_percent > 100)
 	{
 		$planning_communication_percent = number_format(100,2,'.','');
 	}
 		
-
 ?>
 
 <!DOCTYPE html>   
@@ -767,4 +882,3 @@ if($rows > 0)
         
 	</body>
 </html>
-
