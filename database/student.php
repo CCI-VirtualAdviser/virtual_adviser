@@ -1,4 +1,4 @@
-
+  
 <?php 
 session_start();
 $username = 'root';
@@ -482,7 +482,7 @@ if($rows > 0)
 	$taking_now_liberal_hours = $result->fetchColumn();
     
     //student cannot complete more than 100% of a program, so if the completed percentage is greater than 100 make it 100
-	$taking_now_liberal_percent = number_format(($taking_now_science_hours/$science_hours)*100,2,'.','');
+	$taking_now_liberal_percent = number_format(($taking_now_liberal_hours/$liberal_hours)*100,2,'.','');
 	if ($taking_now_liberal_percent > 100)
 	{
 		$taking_now_liberal_percent = number_format(100,2,'.','');
@@ -503,7 +503,7 @@ if($rows > 0)
 	$taking_now_communication_hours = $result->fetchColumn();
     
     //student cannot complete more than 100% of a program, so if the completed percentage is greater than 100 make it 100
-	$taking_now_communication_percent = number_format(($taking_now_science_hours/$science_hours)*100,2,'.','');
+	$taking_now_communication_percent = number_format(($taking_now_communication_hours/$communication_hours)*100,2,'.','');
 	if ($taking_now_communication_percent > 100)
 	{
 		$taking_now_communication_percent = number_format(100,2,'.','');
@@ -583,13 +583,13 @@ if($rows > 0)
 	$result->bindParam(':pid',$program);
 	$result->bindParam(':conid',$concentration);
 	$result->execute();
-	$taking_now_science_hours = $result->fetchColumn();
+	$planning_science_hours = $result->fetchColumn();
     
     //student cannot complete more than 100% of a program, so if the completed percentage is greater than 100 make it 100
-	$taking_now_science_percent = number_format(($taking_now_science_hours/$science_hours)*100,2,'.','');
-	if ($taking_now_science_percent > 100)
+	$planning_science_percent = number_format(($planning_science_hours/$science_hours)*100,2,'.','');
+	if ($planning_science_percent > 100)
 	{
-		$taking_now_science_percent = number_format(100,2,'.','');
+		$planning_science_percent = number_format(100,2,'.','');
 	}
     
     //get social science hours taking now
@@ -605,13 +605,13 @@ if($rows > 0)
 	$result->bindParam(':pid',$program);
 	$result->bindParam(':conid',$concentration);
 	$result->execute();
-	$taking_now_social_science_hours = $result->fetchColumn();
+	$planning_social_science_hours = $result->fetchColumn();
     
     //student cannot complete more than 100% of a program, so if the completed percentage is greater than 100 make it 100
-	$taking_now_social_science_percent = number_format(($taking_now_science_hours/$science_hours)*100,2,'.','');
-	if ($taking_now_social_science_percent > 100)
+	$planning_social_science_percent = number_format(($planning_science_hours/$science_hours)*100,2,'.','');
+	if ($planning_social_science_percent > 100)
 	{
-		$taking_now_social_science_percent = number_format(100,2,'.','');
+		$planning_social_science_percent = number_format(100,2,'.','');
 	}
     
     //get the total number of liberal education requirements taking now	
@@ -626,13 +626,13 @@ if($rows > 0)
 	$result->bindParam(':pid',$program);
 	$result->bindParam(':conid',$concentration);
 	$result->execute();
-	$taking_now_liberal_hours = $result->fetchColumn();
+	$planning_liberal_hours = $result->fetchColumn();
     
     //student cannot complete more than 100% of a program, so if the completed percentage is greater than 100 make it 100
-	$taking_now_liberal_percent = number_format(($taking_now_science_hours/$science_hours)*100,2,'.','');
-	if ($taking_now_liberal_percent > 100)
+	$planning_liberal_percent = number_format(($planning_liberal_hours/$liberal_hours)*100,2,'.','');
+	if ($planning_liberal_percent > 100)
 	{
-		$taking_now_liberal_percent = number_format(100,2,'.','');
+		$planning_liberal_percent = number_format(100,2,'.','');
 	}
     
     //get the number of hours the student is taking now toward communications requirement
@@ -647,13 +647,13 @@ if($rows > 0)
 	$result->bindParam(':pid',$program);
 	$result->bindParam(':conid',$concentration);
 	$result->execute();
-	$taking_now_communication_hours = $result->fetchColumn();
+	$planning_communication_hours = $result->fetchColumn();
     
     //student cannot complete more than 100% of a program, so if the completed percentage is greater than 100 make it 100
-	$taking_now_communication_percent = number_format(($taking_now_science_hours/$science_hours)*100,2,'.','');
-	if ($taking_now_communication_percent > 100)
+	$planning_communication_percent = number_format(($planning_communication_hours/$communication_hours)*100,2,'.','');
+	if ($planning_communication_percent > 100)
 	{
-		$taking_now_communication_percent = number_format(100,2,'.','');
+		$planning_communication_percent = number_format(100,2,'.','');
 	}
 		
 
