@@ -1,4 +1,4 @@
-USE virtual_adviser;
+USE virtual_adviser2;
 
 -- Insert courses into Program_Courses for Bachelor of Arts, Software Information Systems Concentration
 -- fulfills Major
