@@ -1,6 +1,6 @@
 USE virtual_adviser;
 
-SELECT * FROM degree_program;
+SELECT * FROM program_courses where fulfills_liberalEd = '1';
 
 -- Originally table had elective column set to not null since SIS programs had elective hours listed in Bruce Long's spreadsheet
 -- However, since we don't know yet what elective hours are in CS programs, we are changing table to allow null
@@ -19,3 +19,5 @@ VALUES ('BA in SIS','SIS',9,'4-7'),
 	('BA in SIS','Software Engineering',6,'1-4'),
 	('BA in SIS','Cyber Security',6,'0-2'),
 	('BA in SIS','Information Technology',9,'1-4');
+
+select * from course_list where dept_id = 'STAT';
