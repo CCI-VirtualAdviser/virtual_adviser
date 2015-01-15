@@ -1,4 +1,8 @@
   
+<<<<<<< HEAD
+=======
+  
+>>>>>>> b06fb37f6910debf988a17b470b96859d3364592
 <?php 
 session_start();
 $username = 'root';
