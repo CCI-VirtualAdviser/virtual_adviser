@@ -67,7 +67,6 @@ if($rows > 0)
 	$result->bindParam(':conid',$concentration);
 	$result->execute();
 	$completed_major_hours = $result->fetchColumn();
-    
 	
 	/* 	if the student has taken two courses that are equivalent (such as PHIL 1105 and PHIL 1106), the completed hours count should be reduced by the total number
 		of duplicate hours 
@@ -782,6 +781,7 @@ if($rows > 0)
 		<meta charset="UTF-8">
 		<title> Virtual Adviser</title>
 		<link rel="stylesheet" type="text/css" media='screen' href="css/student.screen.css">
+        <script> sr</script>
         <script src="js/jquery.jsj"></script>
         <script src="js/progressbar.js"></script> 
         <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
@@ -806,30 +806,26 @@ width = 500 - margins.left - margins.right - legendPanel.width,
     dataset = [{
         data: [{
             month: 'Major',
-            count: <?php echo $completed_math_percent ?>
+            count: <?php echo $completed_major_percent ?>
         }, {
             month: 'Math',
-            count: 234
+            count: <?php echo $completed_math_percent ?>
         }, {
             month: 'Science',
-            count: 345
+            count: <?php echo $completed_science_percent ?>
         }],
         name: 'Series #1'
     }, {
         data: [{
             month: 'Major',
-            count: 235
+            count: <?php echo $taking_now_major_percent ?>
         }, {
             month: 'Math',
-            count: 267
+            count: <?php echo $taking_now_math_percent ?>
         }, {
             month: 'Science',
-            count: 573
+            count: <?php echo $taking_now_science_percent ?>
         }],
-        name: 'Series #2'
-    }
-
-    ],
     series = dataset.map(function (d) {
         return d.name;
     }),
@@ -960,7 +956,6 @@ series.forEach(function (s, i) {
 		<!-- The div that displays the welcome message-->
 		<div class="welcome">
 			<h1><strong>Welcome, <?php echo $_SESSION['name'] ?>, I'm Professor Bruce, your Virtual Adviser</strong></h1>
-            >h1><?php echo $completed_major_hours; ?></h1>
             <hr/>
             <div class = "bardiv">
                 <p class = "alignleft">MAJOR</p>
@@ -1030,12 +1025,11 @@ series.forEach(function (s, i) {
                 </div>
                 <br>
             </div> <!-- end bardiv class div -->
-            
+            <!--
             <p>Your degree program is <?php echo $program ?></p> 
 			<p>Your concentration is <?php echo $concentration ?></p>
 			<p>Total major hours: <?php echo $major_hours ?>  Total Completed: <?php echo $completed_major_hours ?></p>
 			<p>Completed major percentage: <?php echo $completed_major_percent ?>%</p>
-            <!--
 			<p>Math Option: <?php echo $math_option ?> Total hours: <?php echo $math_hours ?> Completed: <?php echo $completed_math_hours ?></p>
 			<p>Completed math percentage: <?php echo $completed_math_percent ?>%</p>
 			<p>Total science hours: <?php echo $science_hours ?>  Total Completed: <?php echo $completed_science_hours ?></p>

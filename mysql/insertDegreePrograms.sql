@@ -11,13 +11,18 @@ SELECT * FROM program_courses where fulfills_liberalEd = '1';
 ALTER TABLE degree_program MODIFY elective_hours TINYINT;
 ALTER TABLE degree_program CHANGE elective_hours it_elective_hours TINYINT;
 ALTER TABLE degree_program ADD free_elective_hours VARCHAR(3);
+ALTER TABLE degree_program ADD major_id VARCHAR(100);
+ALTER TABLE degree_program ADD dept_id VARCHAR(100);
 
 
 INSERT INTO degree_program
-VALUES ('BA in SIS','SIS',9,'4-7'),
-	('BA in SIS','Web Development',6,'1-4'),
-	('BA in SIS','Software Engineering',6,'1-4'),
-	('BA in SIS','Cyber Security',6,'0-2'),
-	('BA in SIS','Information Technology',9,'1-4');
+VALUES ('Bachelor of Arts','SIS',9,'4-7','Software and Information Systems','Software and Information Systems'),
+	('Bachelor of Arts','Web Development',6,'1-4','Software and Information Systems','Software and Information Systems'),
+	('Bachelor of Arts','Software Engineering',6,'1-4','Software and Information Systems','Software and Information Systems'),
+	('Bachelor of Arts','Cyber Security',6,'0-2','Software and Information Systems','Software and Information Systems'),
+	('Bachelor of Arts','Information Technology',9,'1-4','Software and Information Systems','Software and Information Systems');
 
 select * from course_list where dept_id = 'STAT';
+
+use virtual_adviser2;
+select * from degree_program;
