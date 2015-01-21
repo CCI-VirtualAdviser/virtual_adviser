@@ -9,9 +9,14 @@ SELECT *  FROM degree_program;
 -- Also, we need a column for IT elective hours, and a new column for free elective hours
 -- Free elective hours has to be varchar(3) so it can hold '4-7' or '0-2' hours
 -- ALTER TABLE degree_program MODIFY elective_hours TINYINT;
+<<<<<<< HEAD
 -- ALTER TABLE degree_program CHANGE elective_hours it_elective_hours TINYINT;
 -- ALTER TABLE degree_program ADD free_elective_hours VARCHAR(3);
 
+=======
+ALTER TABLE degree_program CHANGE elective_hours it_elective_hours TINYINT;
+ALTER TABLE degree_program ADD free_elective_hours VARCHAR(3);
+>>>>>>> feature/progressBar
 
 
 INSERT INTO degree_program

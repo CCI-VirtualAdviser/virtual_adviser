@@ -1,6 +1,9 @@
 USE virtual_adviser2;
+<<<<<<< HEAD
 
 select * from program_courses;
+=======
+>>>>>>> feature/progressBar
 
 -- Insert courses into Program_Courses for Bachelor of Arts, Software Information Systems Concentration
 -- fulfills Major

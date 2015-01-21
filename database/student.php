@@ -337,12 +337,23 @@ if($rows > 0)
 	else $communication_hours = 12;
 	
 	//get the number of hours the student has completed toward communications requirement
+<<<<<<< HEAD
 	$result = $conn->prepare("SELECT COUNT(*) FROM (
                             SELECT program_courses.dept_id,program_courses.course_id FROM program_courses  
                             INNER JOIN courses_taken
                             ON program_courses.dept_id = courses_taken.dept_id AND program_courses.course_id = courses_taken.course_id
                             WHERE program_id = :pid AND concentration_id = :conid AND fulfills_communications = 1 AND courses_taken.student_id = :sid) AS
                             communications_courses");
+=======
+	$result = $conn->prepare("SELECT(SUM(credit_hours)) AS hours FROM(
+								SELECT *
+								FROM (SELECT Course_List.course_id,credit_hours FROM Program_Courses, Course_List 
+								WHERE program_id=:pid AND concentration_id=:conid AND fulfills_communications=1 AND Program_Courses.course_id = Course_List.course_id 
+								) AS a
+								WHERE a.course_id IN 
+								(SELECT course_id FROM Courses_Taken WHERE student_id = :sid
+								 UNION SELECT DISTINCT exemption_for FROM courses_taken WHERE student_id = :sid AND exemption_for LIKE 'LBST%')) AS communications_courses");
+>>>>>>> feature/progressBar
 	$result->bindParam(':sid',$id);
 	$result->bindParam(':pid',$program);
 	$result->bindParam(':conid',$concentration);
@@ -383,12 +394,23 @@ if($rows > 0)
     
     
     //get the number of hours the student is currently taking toward their major
+<<<<<<< HEAD
 	$result = $conn->prepare("SELECT COUNT(*) FROM (
                             SELECT program_courses.dept_id,program_courses.course_id FROM program_courses  
                             INNER JOIN courses_taking_now
                             ON program_courses.dept_id = courses_taking_now.dept_id AND program_courses.course_id = courses_taking_now.course_id
                             WHERE program_id = :pid AND concentration_id = :conid AND fulfills_major = 1 AND             
                             courses_taking_now.student_id = :sid) AS major_courses");
+=======
+	$result = $conn->prepare("SELECT(SUM(credit_hours)) AS hours FROM(
+								SELECT *
+								FROM (SELECT Course_List.course_id,credit_hours FROM Program_Courses, Course_List 
+								WHERE program_id=:pid AND concentration_id=:conid AND fulfills_major=1 AND Program_Courses.course_id = Course_List.course_id 
+								) AS a
+								WHERE a.course_id IN 
+								(SELECT course_id FROM Courses_Taking_Now WHERE student_id = :sid)) 
+								AS major_courses");
+>>>>>>> feature/progressBar
 	$result->bindParam(':sid',$id);
 	$result->bindParam(':pid',$program);
 	$result->bindParam(':conid',$concentration);
@@ -405,6 +427,7 @@ if($rows > 0)
     //get number of hours student is taking now toward their math option
 	if($math_option == 1)
 	{
+<<<<<<< HEAD
 		$result = $conn->prepare("SELECT COUNT(*) FROM (
                             SELECT program_courses.dept_id,program_courses.course_id FROM program_courses  
                             INNER JOIN courses_taking_now
@@ -420,6 +443,27 @@ if($rows > 0)
                             ON program_courses.dept_id = courses_taking_now.dept_id AND program_courses.course_id = courses_taking_now.course_id
                             WHERE program_id = :pid AND concentration_id = :conid AND fulfills_math2 = 1 AND             
                             courses_taking_now.student_id = :sid) AS math2_courses");
+=======
+		$result = $conn->prepare("SELECT(SUM(credit_hours)) AS hours FROM(
+								SELECT *
+								FROM (SELECT Course_List.course_id,credit_hours FROM Program_Courses, Course_List 
+								WHERE program_id=:pid AND concentration_id=:conid AND fulfills_math1=1 AND Program_Courses.course_id = Course_List.course_id 
+								) AS a
+								WHERE a.course_id IN 
+								(SELECT course_id FROM Courses_Taking_Now WHERE student_id = :sid))
+								 AS math_credits");
+	}
+	else
+	{
+		$result = $conn->prepare("SELECT(SUM(credit_hours)) AS hours FROM(
+								SELECT *
+								FROM (SELECT Course_List.course_id,credit_hours FROM Program_Courses, Course_List 
+								WHERE program_id=:pid AND concentration_id=:conid AND fulfills_math2=1 AND Program_Courses.course_id = Course_List.course_id 
+								) AS a
+								WHERE a.course_id IN 
+								(SELECT course_id FROM Courses_Taking_Now WHERE student_id = :sid))
+								 AS math_credits");
+>>>>>>> feature/progressBar
 	}
     
     $result->bindParam(':sid',$id);
@@ -429,6 +473,7 @@ if($rows > 0)
 	$taking_now_math_hours = $result->fetchColumn();
     
     //student cannot complete more than 100% of a program, so if the completed percentage is greater than 100 make it 100
+<<<<<<< HEAD
 	
     if($math_hours == 0)
     {
@@ -438,18 +483,32 @@ if($rows > 0)
     {
 	   $taking_now_math_percent = number_format(($completed_social_science_hours/$social_science_hours)*100,2,'.','');
     }
+=======
+	$taking_now_math_percent = number_format(($taking_now_math_hours/$math_hours)*100,2,'.','');
+>>>>>>> feature/progressBar
 	if ($taking_now_math_percent > 100)
 	{
 		$taking_now_math_percent = number_format(100,2,'.','');
 	}
     
     //get science hours taking now
+<<<<<<< HEAD
 	$result = $conn->prepare("SELECT COUNT(*) FROM (
                             SELECT program_courses.dept_id,program_courses.course_id FROM program_courses  
                             INNER JOIN courses_taking_now
                             ON program_courses.dept_id = courses_taking_now.dept_id AND program_courses.course_id = courses_taking_now.course_id
                             WHERE program_id = :pid AND concentration_id = :conid AND fulfills_science = 1 AND             
                             courses_taking_now.student_id = :sid) AS science_courses");
+=======
+	$result = $conn->prepare("SELECT(SUM(credit_hours)) AS hours FROM(
+								SELECT *
+								FROM (SELECT Course_List.course_id,credit_hours FROM Program_Courses, Course_List 
+								WHERE program_id=:pid AND concentration_id=:conid AND fulfills_science=1 AND Program_Courses.course_id = Course_List.course_id 
+								) AS a
+								WHERE a.course_id IN 
+								(SELECT course_id FROM Courses_Taken WHERE student_id = :sid))
+								 AS science_courses");
+>>>>>>> feature/progressBar
 	$result->bindParam(':sid',$id);
 	$result->bindParam(':pid',$program);
 	$result->bindParam(':conid',$concentration);
@@ -457,6 +516,7 @@ if($rows > 0)
 	$taking_now_science_hours = $result->fetchColumn();
     
     //student cannot complete more than 100% of a program, so if the completed percentage is greater than 100 make it 100
+<<<<<<< HEAD
 	if($science_hours == 0)
     {
         $taking_now_science_percent = 0;
@@ -466,18 +526,32 @@ if($rows > 0)
 	   $taking_now_science_percent = number_format(($taking_now_science_hours/$science_hours)*100,2,'.','');
     }
 
+=======
+	$taking_now_science_percent = number_format(($taking_now_science_hours/$science_hours)*100,2,'.','');
+>>>>>>> feature/progressBar
 	if ($taking_now_science_percent > 100)
 	{
 		$taking_now_science_percent = number_format(100,2,'.','');
 	}
     
     //get social science hours taking now
+<<<<<<< HEAD
 	$result = $conn->prepare("SELECT COUNT(*) FROM (
                             SELECT program_courses.dept_id,program_courses.course_id FROM program_courses  
                             INNER JOIN courses_taking_now
                             ON program_courses.dept_id = courses_taking_now.dept_id AND program_courses.course_id = courses_taking_now.course_id
                             WHERE program_id = :pid AND concentration_id = :conid AND fulfills_social_science = 1 AND             
                             courses_taking_now.student_id = :sid) AS social_science_courses");
+=======
+	$result = $conn->prepare("SELECT(SUM(credit_hours)) AS hours FROM(
+								SELECT *
+								FROM (SELECT Course_List.course_id,credit_hours FROM Program_Courses, Course_List 
+								WHERE program_id=:pid AND concentration_id=:conid AND fulfills_social_science=1 AND Program_Courses.course_id = Course_List.course_id 
+								) AS a
+								WHERE a.course_id IN 
+								(SELECT course_id FROM Courses_Taken WHERE student_id = :sid))
+								 AS science_courses");
+>>>>>>> feature/progressBar
 	$result->bindParam(':sid',$id);
 	$result->bindParam(':pid',$program);
 	$result->bindParam(':conid',$concentration);
@@ -485,6 +559,7 @@ if($rows > 0)
 	$taking_now_social_science_hours = $result->fetchColumn();
     
     //student cannot complete more than 100% of a program, so if the completed percentage is greater than 100 make it 100
+<<<<<<< HEAD
 	if($social_science_hours == 0)
     {
         $taking_now_social_science_percent = 0;
@@ -494,18 +569,31 @@ if($rows > 0)
 	   $taking_now_social_science_percent = number_format(($taking_now_social_science_hours/$social_science_hours)*100,2,'.','');
     }
 
+=======
+	$taking_now_social_science_percent = number_format(($taking_now_science_hours/$science_hours)*100,2,'.','');
+>>>>>>> feature/progressBar
 	if ($taking_now_social_science_percent > 100)
 	{
 		$taking_now_social_science_percent = number_format(100,2,'.','');
 	}
     
     //get the total number of liberal education requirements taking now	
+<<<<<<< HEAD
 	$result = $conn->prepare("SELECT COUNT(*) FROM (
                             SELECT program_courses.dept_id,program_courses.course_id FROM program_courses  
                             INNER JOIN courses_taking_now
                             ON program_courses.dept_id = courses_taking_now.dept_id AND program_courses.course_id = courses_taking_now.course_id
                             WHERE program_id = :pid AND concentration_id = :conid AND fulfills_liberalEd = 1 AND             
                             courses_taking_now.student_id = :sid) AS liberalEd_courses");
+=======
+	$result = $conn->prepare("SELECT(SUM(credit_hours)) AS hours FROM(
+								SELECT *
+								FROM (SELECT Course_List.course_id,credit_hours FROM Program_Courses, Course_List 
+								WHERE program_id=:pid AND concentration_id=:conid AND fulfills_liberalEd=1 AND Program_Courses.course_id = Course_List.course_id 
+								) AS a
+								WHERE a.course_id IN 
+								(SELECT course_id FROM Courses_Taken WHERE student_id = :sid)) AS liberalEd_courses");
+>>>>>>> feature/progressBar
 	$result->bindParam(':sid',$id);
 	$result->bindParam(':pid',$program);
 	$result->bindParam(':conid',$concentration);
@@ -513,6 +601,7 @@ if($rows > 0)
 	$taking_now_liberal_hours = $result->fetchColumn();
     
     //student cannot complete more than 100% of a program, so if the completed percentage is greater than 100 make it 100
+<<<<<<< HEAD
 	if($liberal_hours == 0)
     {
         $taking_now_liberal_percent = 0;
@@ -522,18 +611,31 @@ if($rows > 0)
 	   $taking_now_liberal_percent = number_format(($taking_now_liberal_hours/$liberal_hours)*100,2,'.','');
     }
 
+=======
+	$taking_now_liberal_percent = number_format(($taking_now_science_hours/$science_hours)*100,2,'.','');
+>>>>>>> feature/progressBar
 	if ($taking_now_liberal_percent > 100)
 	{
 		$taking_now_liberal_percent = number_format(100,2,'.','');
 	}
     
     //get the number of hours the student is taking now toward communications requirement
+<<<<<<< HEAD
 	$result = $conn->prepare("SELECT COUNT(*) FROM (
                             SELECT program_courses.dept_id,program_courses.course_id FROM program_courses  
                             INNER JOIN courses_taking_now
                             ON program_courses.dept_id = courses_taking_now.dept_id AND program_courses.course_id = courses_taking_now.course_id
                             WHERE program_id = :pid AND concentration_id = :conid AND fulfills_communications = 1 AND             
                             courses_taking_now.student_id = :sid) AS communications_courses");
+=======
+	$result = $conn->prepare("SELECT(SUM(credit_hours)) AS hours FROM(
+								SELECT *
+								FROM (SELECT Course_List.course_id,credit_hours FROM Program_Courses, Course_List 
+								WHERE program_id=:pid AND concentration_id=:conid AND fulfills_communications=1 AND Program_Courses.course_id = Course_List.course_id 
+								) AS a
+								WHERE a.course_id IN 
+								(SELECT course_id FROM Courses_Taken WHERE student_id = :sid)) AS communications_courses");
+>>>>>>> feature/progressBar
 	$result->bindParam(':sid',$id);
 	$result->bindParam(':pid',$program);
 	$result->bindParam(':conid',$concentration);
@@ -541,7 +643,11 @@ if($rows > 0)
 	$taking_now_communication_hours = $result->fetchColumn();
     
     //student cannot complete more than 100% of a program, so if the completed percentage is greater than 100 make it 100
+<<<<<<< HEAD
 	$taking_now_communication_percent = number_format(($taking_now_communication_hours/$communication_hours)*100,2,'.','');
+=======
+	$taking_now_communication_percent = number_format(($taking_now_science_hours/$science_hours)*100,2,'.','');
+>>>>>>> feature/progressBar
 	if ($taking_now_communication_percent > 100)
 	{
 		$taking_now_communication_percent = number_format(100,2,'.','');
@@ -784,6 +890,61 @@ if($rows > 0)
 		<!-- The div that displays the welcome message-->
 		<div class="welcome">
 			<h1><strong>Welcome, <?php echo $_SESSION['name'] ?>, I'm Professor Bruce, your Virtual Adviser</strong></h1>
+<<<<<<< HEAD
+=======
+            <hr/>
+            <div class = "bardiv">
+                <p class = "alignleft">MAJOR</p>
+                <div id="progressBar" class = "alignleft">
+                    <div><script>progress(<?php echo $completed_major_percent ?>,$('#progressBar'));</script></div>
+                </div>
+                <div id="progressBar" class = "alignleft">
+                    <div><script>progress(<?php echo $taking_now_major_percent ?>,$('#progressBar'));</script></div>
+                </div>
+                <br>
+                <p class = "alignleft">MATH</p>
+                <div id="progressBar" class = "alignleft">
+                    <div><script>progress(<?php echo $completed_math_percent ?>,$('#progressBar'));</script></div>
+                </div>
+                <div id="progressBar" class = "alignleft">
+                    <div><script>progress(<?php echo $taking_now_math_percent ?>,$('#progressBar'));</script></div>
+                </div>
+                <br>
+                <p class = "alignleft">SCIENCE</p>
+                <div id="progressBar" class = "alignleft">
+                    <div><script>progress(<?php echo $completed_science_percent ?>,$('#progressBar'));</script></div>
+                </div>
+                <div id="progressBar" class = "alignleft">
+                    <div><script>progress(<?php echo $taking_now_science_percent ?>,$('#progressBar'));</script></div>
+                </div>
+                <br>
+                <p class = "alignleft">SOCIAL SCIENCE</p>
+                <div id="progressBar" class = "alignleft">
+                    <div><script>progress(<?php echo $completed_social_science_percent ?>,$('#progressBar'));</script></div>
+                </div>
+                <div id="progressBar" class = "alignleft">
+                    <div><script>progress(<?php echo $taking_now_social_science_percent ?>,$('#progressBar'));</script></div>
+                </div>
+                <br>
+                <p class = "alignleft">LIBERAL STUDIES</p>
+                <div id="progressBar" class = "alignleft">
+                    <div><script>progress(<?php echo $completed_liberal_percent ?>,$('#progressBar'));</script></div>
+                </div>
+                <div id="progressBar" class = "alignleft">
+                    <div><script>progress(<?php echo $taking_now_liberal_percent ?>,$('#progressBar'));</script></div>
+                </div>
+                <br>
+                <p class = "alignleft">COMMUNICATIONS</p>
+                <div id="progressBar" class = "alignleft">
+                    <div><script>progress(<?php echo $completed_communication_percent ?>,$('#progressBar'));</script></div>
+                </div>
+                <div id="progressBar" class = "alignleft">
+                    <div><script>progress(<?php echo $taking_now_communication_percent ?>,$('#progressBar'));</script></div>
+                </div>
+                <br>
+            </div> <!-- end bardiv class div -->
+            <!--
+>>>>>>> feature/progressBar
             <p>Your degree program is <?php echo $program ?></p> 
 			<p>Your concentration is <?php echo $concentration ?></p>
             <hr/>
@@ -810,3 +971,7 @@ if($rows > 0)
         
 	</body>
 </html>
+<<<<<<< HEAD
+=======
+
+>>>>>>> feature/progressBar
