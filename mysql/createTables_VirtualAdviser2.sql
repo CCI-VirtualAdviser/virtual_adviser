@@ -145,7 +145,8 @@ CREATE TABLE IF NOT EXISTS `virtual_adviser2`.`courses_taken` (
   `course_id` VARCHAR(11) NOT NULL,
   `letter_grade` ENUM('A','B','C','D','F','I','W','P','N','TP','TA','TB','TC','QF','QD','RF') NOT NULL,
   `semester_id` VARCHAR(6) NOT NULL,
-  `exemption_for` VARCHAR(11) NULL,
+  `exemption_for_course` VARCHAR(6) NULL,
+  `exemption_for_dept` VARCHAR(4) NULL,
   `dept_id` VARCHAR(4) NOT NULL,
   PRIMARY KEY (`student_id`, `course_id`, `semester_id`, `dept_id`),
   INDEX `student_id_idx` (`student_id` ASC),
@@ -153,11 +154,6 @@ CREATE TABLE IF NOT EXISTS `virtual_adviser2`.`courses_taken` (
   CONSTRAINT `courses_taken_ibfk_1`
     FOREIGN KEY (`student_id`)
     REFERENCES `virtual_adviser2`.`students` (`student_id`)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE,
-  CONSTRAINT `courses_taken_ibfk_2`
-    FOREIGN KEY (`course_id`)
-    REFERENCES `virtual_adviser2`.`course_list` (`course_id`)
     ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB

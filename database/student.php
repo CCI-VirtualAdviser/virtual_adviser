@@ -53,20 +53,17 @@ if($rows > 0)
 	$major_hours = $result->fetchColumn();
 	
 	//get the number of hours the student has completed toward their major
-	$result = $conn->prepare("SELECT(SUM(credit_hours)) AS hours FROM(
-								SELECT *
-								FROM (SELECT Course_List.course_id,credit_hours FROM Program_Courses, Course_List 
-								WHERE program_id=:pid AND concentration_id=:conid AND fulfills_major=1 AND Program_Courses.course_id = Course_List.course_id 
-								) AS a
-								WHERE a.course_id IN 
-								(SELECT course_id FROM Courses_Taken WHERE student_id = :sid
-								UNION SELECT DISTINCT Courses_Taken.exemption_for FROM Program_Courses,Courses_Taken WHERE Program_Courses.course_id = Courses_Taken.exemption_for AND Courses_Taken.student_id = :sid)) 
-								AS major_courses");
+	$result = $conn->prepare("SELECT COUNT(*) FROM (
+                            SELECT program_courses.dept_id,program_courses.course_id FROM program_courses  
+                            INNER JOIN courses_taken
+                            ON program_courses.dept_id = courses_taken.dept_id AND program_courses.course_id = courses_taken.course_id
+                            WHERE program_id = :pid AND concentration_id = :conid AND fulfills_major = 1 AND courses_taken.student_id = :sid) AS major_courses");
 	$result->bindParam(':sid',$id);
 	$result->bindParam(':pid',$program);
 	$result->bindParam(':conid',$concentration);
 	$result->execute();
 	$completed_major_hours = $result->fetchColumn();
+    
 	
 	/* 	if the student has taken two courses that are equivalent (such as PHIL 1105 and PHIL 1106), the completed hours count should be reduced by the total number
 		of duplicate hours 
@@ -124,30 +121,21 @@ if($rows > 0)
 	$math_hours = $result->fetchColumn();
 	
 	//get the number of hours the student has completed toward their math option
-	//Note that the SQL code after UNION will include the courses that transfer in and exempt student from a math course
 	if($math_option == 1)
 	{
-		$result = $conn->prepare("SELECT(SUM(credit_hours)) AS hours FROM(
-								SELECT *
-								FROM (SELECT Course_List.course_id,credit_hours FROM Program_Courses, Course_List 
-								WHERE program_id=:pid AND concentration_id=:conid AND fulfills_math1=1 AND Program_Courses.course_id = Course_List.course_id 
-								) AS a
-								WHERE a.course_id IN 
-								(SELECT course_id FROM Courses_Taken WHERE student_id = :sid
-								 UNION SELECT DISTINCT Courses_Taken.exemption_for FROM Program_Courses,Courses_Taken WHERE Program_Courses.course_id = Courses_Taken.exemption_for AND Courses_Taken.student_id = :sid))
-								 AS math_credits");
+		$result = $conn->prepare("SELECT COUNT(*) FROM (
+                            SELECT program_courses.dept_id,program_courses.course_id FROM program_courses  
+                            INNER JOIN courses_taken
+                            ON program_courses.dept_id = courses_taken.dept_id AND program_courses.course_id = courses_taken.course_id
+                            WHERE program_id = :pid AND concentration_id = :conid AND fulfills_math1 = 1 AND courses_taken.student_id = :sid) AS math1_courses");
 	}
 	else
 	{
-		$result = $conn->prepare("SELECT(SUM(credit_hours)) AS hours FROM(
-								SELECT *
-								FROM (SELECT Course_List.course_id,credit_hours FROM Program_Courses, Course_List 
-								WHERE program_id=:pid AND concentration_id=:conid AND fulfills_math2=1 AND Program_Courses.course_id = Course_List.course_id 
-								) AS a
-								WHERE a.course_id IN 
-								(SELECT course_id FROM Courses_Taken WHERE student_id = :sid
-								 UNION SELECT DISTINCT Courses_Taken.exemption_for FROM Program_Courses,Courses_Taken WHERE Program_Courses.course_id = Courses_Taken.exemption_for AND Courses_Taken.student_id = :sid))
-								 AS math_credits");
+		$result = $conn->prepare("SELECT COUNT(*) FROM (
+                            SELECT program_courses.dept_id,program_courses.course_id FROM program_courses  
+                            INNER JOIN courses_taken
+                            ON program_courses.dept_id = courses_taken.dept_id AND program_courses.course_id = courses_taken.course_id
+                            WHERE program_id = :pid AND concentration_id = :conid AND fulfills_maht2 = 1 AND courses_taken.student_id = :sid) AS math_courses");
 	}
 	$result->bindParam(':sid',$id);
 	$result->bindParam(':pid',$program);
@@ -203,16 +191,12 @@ if($rows > 0)
 	$social_science_hours = 3;
 	
 	//get the number of hours the student has completed toward their science requirement
-	//Note that the SQL code after UNION will include the courses that transfer in and exempt student from a science course
-	$result = $conn->prepare("SELECT(SUM(credit_hours)) AS hours FROM(
-								SELECT *
-								FROM (SELECT Course_List.course_id,credit_hours FROM Program_Courses, Course_List 
-								WHERE program_id=:pid AND concentration_id=:conid AND fulfills_science=1 AND Program_Courses.course_id = Course_List.course_id 
-								) AS a
-								WHERE a.course_id IN 
-								(SELECT course_id FROM Courses_Taken WHERE student_id = :sid
-								 UNION SELECT DISTINCT Courses_Taken.exemption_for FROM Program_Courses,Courses_Taken WHERE Program_Courses.course_id = Courses_Taken.exemption_for AND Courses_Taken.student_id = :sid))
-								 AS science_courses");
+	$result = $conn->prepare("SELECT COUNT(*) FROM (
+                            SELECT program_courses.dept_id,program_courses.course_id FROM program_courses  
+                            INNER JOIN courses_taken
+                            ON program_courses.dept_id = courses_taken.dept_id AND program_courses.course_id = courses_taken.course_id
+                            WHERE program_id = :pid AND concentration_id = :conid AND fulfills_science = 1 AND courses_taken.student_id = :sid) AS
+                            science_courses");
 	$result->bindParam(':sid',$id);
 	$result->bindParam(':pid',$program);
 	$result->bindParam(':conid',$concentration);
@@ -255,16 +239,12 @@ if($rows > 0)
 	}
 	
 	//get the number of hours the student has completed toward their social science requirement
-	//Note that the SQL code after UNION will include the courses that transfer in and exempt student from a social science course
-	$result = $conn->prepare("SELECT(SUM(credit_hours)) AS hours FROM(
-								SELECT *
-								FROM (SELECT Course_List.course_id,credit_hours FROM Program_Courses, Course_List 
-								WHERE program_id=:pid AND concentration_id=:conid AND fulfills_social_science=1 AND Program_Courses.course_id = Course_List.course_id 
-								) AS a
-								WHERE a.course_id IN 
-								(SELECT course_id FROM Courses_Taken WHERE student_id = :sid
-								 UNION SELECT DISTINCT courses_taken.exemption_for FROM program_courses,courses_taken WHERE program_courses.course_id = courses_taken.exemption_for AND courses_taken.student_id = :sid)) 
-								 AS social_science_courses");
+	$result = $conn->prepare("SELECT COUNT(*) FROM (
+                            SELECT program_courses.dept_id,program_courses.course_id FROM program_courses  
+                            INNER JOIN courses_taken
+                            ON program_courses.dept_id = courses_taken.dept_id AND program_courses.course_id = courses_taken.course_id
+                            WHERE program_id = :pid AND concentration_id = :conid AND fulfills_social_science = 1 AND courses_taken.student_id = :sid) AS
+                            social_science_courses");
 	$result->bindParam(':sid',$id);
 	$result->bindParam(':pid',$program);
 	$result->bindParam(':conid',$concentration);
@@ -305,15 +285,12 @@ if($rows > 0)
 	$liberal_hours = 12;
 	
 	//get the total number of liberal education requirements completed	
-	//Note that the statement WHERE a.course_id IN is followed by a UNION of SELECT statements which includes transfer credits that exempt the student from course requirements
-	$result = $conn->prepare("SELECT(SUM(credit_hours)) AS hours FROM(
-								SELECT *
-								FROM (SELECT Course_List.course_id,credit_hours FROM Program_Courses, Course_List 
-								WHERE program_id=:pid AND concentration_id=:conid AND fulfills_liberalEd=1 AND Program_Courses.course_id = Course_List.course_id 
-								) AS a
-								WHERE a.course_id IN 
-								(SELECT course_id FROM Courses_Taken WHERE student_id = :sid
-								 UNION SELECT DISTINCT exemption_for FROM courses_taken WHERE student_id = :sid AND exemption_for LIKE 'LBST%')) AS liberalEd_courses");
+	$result = $conn->prepare("SELECT COUNT(*) FROM (
+                            SELECT program_courses.dept_id,program_courses.course_id FROM program_courses  
+                            INNER JOIN courses_taken
+                            ON program_courses.dept_id = courses_taken.dept_id AND program_courses.course_id = courses_taken.course_id
+                            WHERE program_id = :pid AND concentration_id = :conid AND fulfills_liberalEd = 1 AND courses_taken.student_id = :sid) AS
+                            liberalEd_courses");
 	$result->bindParam(':sid',$id);
 	$result->bindParam(':pid',$program);
 	$result->bindParam(':conid',$concentration);
@@ -360,14 +337,12 @@ if($rows > 0)
 	else $communication_hours = 12;
 	
 	//get the number of hours the student has completed toward communications requirement
-	$result = $conn->prepare("SELECT(SUM(credit_hours)) AS hours FROM(
-								SELECT *
-								FROM (SELECT Course_List.course_id,credit_hours FROM Program_Courses, Course_List 
-								WHERE program_id=:pid AND concentration_id=:conid AND fulfills_communications=1 AND Program_Courses.course_id = Course_List.course_id 
-								) AS a
-								WHERE a.course_id IN 
-								(SELECT course_id FROM Courses_Taken WHERE student_id = :sid
-								 UNION SELECT DISTINCT exemption_for FROM courses_taken WHERE student_id = :sid AND exemption_for LIKE 'LBST%')) AS communications_courses");
+	$result = $conn->prepare("SELECT COUNT(*) FROM (
+                            SELECT program_courses.dept_id,program_courses.course_id FROM program_courses  
+                            INNER JOIN courses_taken
+                            ON program_courses.dept_id = courses_taken.dept_id AND program_courses.course_id = courses_taken.course_id
+                            WHERE program_id = :pid AND concentration_id = :conid AND fulfills_communications = 1 AND courses_taken.student_id = :sid) AS
+                            communications_courses");
 	$result->bindParam(':sid',$id);
 	$result->bindParam(':pid',$program);
 	$result->bindParam(':conid',$concentration);
@@ -408,14 +383,12 @@ if($rows > 0)
     
     
     //get the number of hours the student is currently taking toward their major
-	$result = $conn->prepare("SELECT(SUM(credit_hours)) AS hours FROM(
-								SELECT *
-								FROM (SELECT Course_List.course_id,credit_hours FROM Program_Courses, Course_List 
-								WHERE program_id=:pid AND concentration_id=:conid AND fulfills_major=1 AND Program_Courses.course_id = Course_List.course_id 
-								) AS a
-								WHERE a.course_id IN 
-								(SELECT course_id FROM Courses_Taking_Now WHERE student_id = :sid)) 
-								AS major_courses");
+	$result = $conn->prepare("SELECT COUNT(*) FROM (
+                            SELECT program_courses.dept_id,program_courses.course_id FROM program_courses  
+                            INNER JOIN courses_taking_now
+                            ON program_courses.dept_id = courses_taking_now.dept_id AND program_courses.course_id = courses_taking_now.course_id
+                            WHERE program_id = :pid AND concentration_id = :conid AND fulfills_major = 1 AND             
+                            courses_taking_now.student_id = :sid) AS major_courses");
 	$result->bindParam(':sid',$id);
 	$result->bindParam(':pid',$program);
 	$result->bindParam(':conid',$concentration);
@@ -432,25 +405,21 @@ if($rows > 0)
     //get number of hours student is taking now toward their math option
 	if($math_option == 1)
 	{
-		$result = $conn->prepare("SELECT(SUM(credit_hours)) AS hours FROM(
-								SELECT *
-								FROM (SELECT Course_List.course_id,credit_hours FROM Program_Courses, Course_List 
-								WHERE program_id=:pid AND concentration_id=:conid AND fulfills_math1=1 AND Program_Courses.course_id = Course_List.course_id 
-								) AS a
-								WHERE a.course_id IN 
-								(SELECT course_id FROM Courses_Taking_Now WHERE student_id = :sid))
-								 AS math_credits");
+		$result = $conn->prepare("SELECT COUNT(*) FROM (
+                            SELECT program_courses.dept_id,program_courses.course_id FROM program_courses  
+                            INNER JOIN courses_taking_now
+                            ON program_courses.dept_id = courses_taking_now.dept_id AND program_courses.course_id = courses_taking_now.course_id
+                            WHERE program_id = :pid AND concentration_id = :conid AND fulfills_math1 = 1 AND             
+                            courses_taking_now.student_id = :sid) AS math_courses");
 	}
 	else
 	{
-		$result = $conn->prepare("SELECT(SUM(credit_hours)) AS hours FROM(
-								SELECT *
-								FROM (SELECT Course_List.course_id,credit_hours FROM Program_Courses, Course_List 
-								WHERE program_id=:pid AND concentration_id=:conid AND fulfills_math2=1 AND Program_Courses.course_id = Course_List.course_id 
-								) AS a
-								WHERE a.course_id IN 
-								(SELECT course_id FROM Courses_Taking_Now WHERE student_id = :sid))
-								 AS math_credits");
+		$result = $conn->prepare("SELECT COUNT(*) FROM (
+                            SELECT program_courses.dept_id,program_courses.course_id FROM program_courses  
+                            INNER JOIN courses_taking_now
+                            ON program_courses.dept_id = courses_taking_now.dept_id AND program_courses.course_id = courses_taking_now.course_id
+                            WHERE program_id = :pid AND concentration_id = :conid AND fulfills_math2 = 1 AND             
+                            courses_taking_now.student_id = :sid) AS math2_courses");
 	}
     
     $result->bindParam(':sid',$id);
@@ -475,14 +444,12 @@ if($rows > 0)
 	}
     
     //get science hours taking now
-	$result = $conn->prepare("SELECT(SUM(credit_hours)) AS hours FROM(
-								SELECT *
-								FROM (SELECT Course_List.course_id,credit_hours FROM Program_Courses, Course_List 
-								WHERE program_id=:pid AND concentration_id=:conid AND fulfills_science=1 AND Program_Courses.course_id = Course_List.course_id 
-								) AS a
-								WHERE a.course_id IN 
-								(SELECT course_id FROM Courses_Taken WHERE student_id = :sid))
-								 AS science_courses");
+	$result = $conn->prepare("SELECT COUNT(*) FROM (
+                            SELECT program_courses.dept_id,program_courses.course_id FROM program_courses  
+                            INNER JOIN courses_taking_now
+                            ON program_courses.dept_id = courses_taking_now.dept_id AND program_courses.course_id = courses_taking_now.course_id
+                            WHERE program_id = :pid AND concentration_id = :conid AND fulfills_science = 1 AND             
+                            courses_taking_now.student_id = :sid) AS science_courses");
 	$result->bindParam(':sid',$id);
 	$result->bindParam(':pid',$program);
 	$result->bindParam(':conid',$concentration);
@@ -505,14 +472,12 @@ if($rows > 0)
 	}
     
     //get social science hours taking now
-	$result = $conn->prepare("SELECT(SUM(credit_hours)) AS hours FROM(
-								SELECT *
-								FROM (SELECT Course_List.course_id,credit_hours FROM Program_Courses, Course_List 
-								WHERE program_id=:pid AND concentration_id=:conid AND fulfills_social_science=1 AND Program_Courses.course_id = Course_List.course_id 
-								) AS a
-								WHERE a.course_id IN 
-								(SELECT course_id FROM Courses_Taking_now WHERE student_id = :sid))
-								 AS science_courses");
+	$result = $conn->prepare("SELECT COUNT(*) FROM (
+                            SELECT program_courses.dept_id,program_courses.course_id FROM program_courses  
+                            INNER JOIN courses_taking_now
+                            ON program_courses.dept_id = courses_taking_now.dept_id AND program_courses.course_id = courses_taking_now.course_id
+                            WHERE program_id = :pid AND concentration_id = :conid AND fulfills_social_science = 1 AND             
+                            courses_taking_now.student_id = :sid) AS social_science_courses");
 	$result->bindParam(':sid',$id);
 	$result->bindParam(':pid',$program);
 	$result->bindParam(':conid',$concentration);
@@ -535,13 +500,12 @@ if($rows > 0)
 	}
     
     //get the total number of liberal education requirements taking now	
-	$result = $conn->prepare("SELECT(SUM(credit_hours)) AS hours FROM(
-								SELECT *
-								FROM (SELECT Course_List.course_id,credit_hours FROM Program_Courses, Course_List 
-								WHERE program_id=:pid AND concentration_id=:conid AND fulfills_liberalEd=1 AND Program_Courses.course_id = Course_List.course_id 
-								) AS a
-								WHERE a.course_id IN 
-								(SELECT course_id FROM Courses_taking_now WHERE student_id = :sid)) AS liberalEd_courses");
+	$result = $conn->prepare("SELECT COUNT(*) FROM (
+                            SELECT program_courses.dept_id,program_courses.course_id FROM program_courses  
+                            INNER JOIN courses_taking_now
+                            ON program_courses.dept_id = courses_taking_now.dept_id AND program_courses.course_id = courses_taking_now.course_id
+                            WHERE program_id = :pid AND concentration_id = :conid AND fulfills_liberalEd = 1 AND             
+                            courses_taking_now.student_id = :sid) AS liberalEd_courses");
 	$result->bindParam(':sid',$id);
 	$result->bindParam(':pid',$program);
 	$result->bindParam(':conid',$concentration);
@@ -564,13 +528,12 @@ if($rows > 0)
 	}
     
     //get the number of hours the student is taking now toward communications requirement
-	$result = $conn->prepare("SELECT(SUM(credit_hours)) AS hours FROM(
-								SELECT *
-								FROM (SELECT Course_List.course_id,credit_hours FROM Program_Courses, Course_List 
-								WHERE program_id=:pid AND concentration_id=:conid AND fulfills_communications=1 AND Program_Courses.course_id = Course_List.course_id 
-								) AS a
-								WHERE a.course_id IN 
-								(SELECT course_id FROM Courses_taking_now WHERE student_id = :sid)) AS communications_courses");
+	$result = $conn->prepare("SELECT COUNT(*) FROM (
+                            SELECT program_courses.dept_id,program_courses.course_id FROM program_courses  
+                            INNER JOIN courses_taking_now
+                            ON program_courses.dept_id = courses_taking_now.dept_id AND program_courses.course_id = courses_taking_now.course_id
+                            WHERE program_id = :pid AND concentration_id = :conid AND fulfills_communications = 1 AND             
+                            courses_taking_now.student_id = :sid) AS communications_courses");
 	$result->bindParam(':sid',$id);
 	$result->bindParam(':pid',$program);
 	$result->bindParam(':conid',$concentration);
@@ -586,14 +549,12 @@ if($rows > 0)
 		
 }
 //get the number of hours the student is planning taking toward their major
-	$result = $conn->prepare("SELECT(SUM(credit_hours)) AS hours FROM(
-								SELECT *
-								FROM (SELECT Course_List.course_id,credit_hours FROM Program_Courses, Course_List 
-								WHERE program_id=:pid AND concentration_id=:conid AND fulfills_major=1 AND Program_Courses.course_id = Course_List.course_id 
-								) AS a
-								WHERE a.course_id IN 
-								(SELECT course_id FROM Courses_planning WHERE student_id = :sid)) 
-								AS major_courses");
+	$result = $conn->prepare("SELECT COUNT(*) FROM (
+                            SELECT program_courses.dept_id,program_courses.course_id FROM program_courses  
+                            INNER JOIN courses_planning
+                            ON program_courses.dept_id = courses_planning.dept_id AND program_courses.course_id = courses_planning.course_id
+                            WHERE program_id = :pid AND concentration_id = :conid AND fulfills_major = 1 AND courses_planning.student_id 
+                            = :sid) AS major_courses");
 	$result->bindParam(':sid',$id);
 	$result->bindParam(':pid',$program);
 	$result->bindParam(':conid',$concentration);
@@ -617,32 +578,28 @@ if($rows > 0)
 //get number of hours student is planning toward their math option
 	if($math_option == 1)
 	{
-		$result = $conn->prepare("SELECT(SUM(credit_hours)) AS hours FROM(
-								SELECT *
-								FROM (SELECT Course_List.course_id,credit_hours FROM Program_Courses, Course_List 
-								WHERE program_id=:pid AND concentration_id=:conid AND fulfills_math1=1 AND Program_Courses.course_id = Course_List.course_id 
-								) AS a
-								WHERE a.course_id IN 
-								(SELECT course_id FROM Courses_planning WHERE student_id = :sid))
-								 AS math_credits");
+		$result = $conn->prepare("SELECT COUNT(*) FROM (
+                            SELECT program_courses.dept_id,program_courses.course_id FROM program_courses  
+                            INNER JOIN courses_planning
+                            ON program_courses.dept_id = courses_planning.dept_id AND program_courses.course_id = courses_planning.course_id
+                            WHERE program_id = :pid AND concentration_id = :conid AND fulfills_math1 = 1 AND courses_planning.student_id 
+                            = :sid) AS math1_courses");
 	}
 	else
 	{
-		$result = $conn->prepare("SELECT(SUM(credit_hours)) AS hours FROM(
-								SELECT *
-								FROM (SELECT Course_List.course_id,credit_hours FROM Program_Courses, Course_List 
-								WHERE program_id=:pid AND concentration_id=:conid AND fulfills_math2=1 AND Program_Courses.course_id = Course_List.course_id 
-								) AS a
-								WHERE a.course_id IN 
-								(SELECT course_id FROM Courses_planning WHERE student_id = :sid))
-								 AS math_credits");
+		$result = $conn->prepare("SELECT COUNT(*) FROM (
+                            SELECT program_courses.dept_id,program_courses.course_id FROM program_courses  
+                            INNER JOIN courses_planning
+                            ON program_courses.dept_id = courses_planning.dept_id AND program_courses.course_id = courses_planning.course_id
+                            WHERE program_id = :pid AND concentration_id = :conid AND fulfills_math2 = 1 AND courses_planning.student_id 
+                            = :sid) AS math2_courses");
 	}
     
     $result->bindParam(':sid',$id);
 	$result->bindParam(':pid',$program);
 	$result->bindParam(':conid',$concentration);
 	$result->execute();
-	$taking_now_math_hours = $result->fetchColumn();
+	$planning_math_hours = $result->fetchColumn();
     
     //student cannot complete more than 100% of a program, so if the completed percentage is greater than 100 make it 100
 	if($math_hours == 0)
@@ -658,14 +615,12 @@ if($rows > 0)
 		$planning_math_percent = number_format(100,2,'.','');
 	}
 //get science hours planning
-	$result = $conn->prepare("SELECT(SUM(credit_hours)) AS hours FROM(
-								SELECT *
-								FROM (SELECT Course_List.course_id,credit_hours FROM Program_Courses, Course_List 
-								WHERE program_id=:pid AND concentration_id=:conid AND fulfills_science=1 AND Program_Courses.course_id = Course_List.course_id 
-								) AS a
-								WHERE a.course_id IN 
-								(SELECT course_id FROM Courses_planning WHERE student_id = :sid))
-								 AS science_courses");
+	$result = $conn->prepare("SELECT COUNT(*) FROM (
+                            SELECT program_courses.dept_id,program_courses.course_id FROM program_courses  
+                            INNER JOIN courses_planning
+                            ON program_courses.dept_id = courses_planning.dept_id AND program_courses.course_id = courses_planning.course_id
+                            WHERE program_id = :pid AND concentration_id = :conid AND fulfills_science = 1 AND courses_planning.student_id 
+                            = :sid) AS science_courses");
 	$result->bindParam(':sid',$id);
 	$result->bindParam(':pid',$program);
 	$result->bindParam(':conid',$concentration);
@@ -687,14 +642,12 @@ if($rows > 0)
 	}
     
     //get social science hours taking now
-	$result = $conn->prepare("SELECT(SUM(credit_hours)) AS hours FROM(
-								SELECT *
-								FROM (SELECT Course_List.course_id,credit_hours FROM Program_Courses, Course_List 
-								WHERE program_id=:pid AND concentration_id=:conid AND fulfills_social_science=1 AND Program_Courses.course_id = Course_List.course_id 
-								) AS a
-								WHERE a.course_id IN 
-								(SELECT course_id FROM Courses_planning WHERE student_id = :sid))
-								 AS science_courses");
+	$result = $conn->prepare("SELECT COUNT(*) FROM (
+                            SELECT program_courses.dept_id,program_courses.course_id FROM program_courses  
+                            INNER JOIN courses_planning
+                            ON program_courses.dept_id = courses_planning.dept_id AND program_courses.course_id = courses_planning.course_id
+                            WHERE program_id = :pid AND concentration_id = :conid AND fulfills_science = 1 AND courses_planning.student_id 
+                            = :sid) AS social_science_courses");
 	$result->bindParam(':sid',$id);
 	$result->bindParam(':pid',$program);
 	$result->bindParam(':conid',$concentration);
@@ -716,13 +669,12 @@ if($rows > 0)
 	}
     
     //get the total number of liberal education requirements taking now	
-	$result = $conn->prepare("SELECT(SUM(credit_hours)) AS hours FROM(
-								SELECT *
-								FROM (SELECT Course_List.course_id,credit_hours FROM Program_Courses, Course_List 
-								WHERE program_id=:pid AND concentration_id=:conid AND fulfills_liberalEd=1 AND Program_Courses.course_id = Course_List.course_id 
-								) AS a
-								WHERE a.course_id IN 
-								(SELECT course_id FROM Courses_planning WHERE student_id = :sid)) AS liberalEd_courses");
+	$result = $conn->prepare("SELECT COUNT(*) FROM (
+                            SELECT program_courses.dept_id,program_courses.course_id FROM program_courses  
+                            INNER JOIN courses_planning
+                            ON program_courses.dept_id = courses_planning.dept_id AND program_courses.course_id = courses_planning.course_id
+                            WHERE program_id = :pid AND concentration_id = :conid AND fulfills_liberalEd = 1 AND courses_planning.student_id 
+                            = :sid) AS liberalEd_courses");
 	$result->bindParam(':sid',$id);
 	$result->bindParam(':pid',$program);
 	$result->bindParam(':conid',$concentration);
@@ -744,13 +696,12 @@ if($rows > 0)
 	}
     
     //get the number of hours the student is taking now toward communications requirement
-	$result = $conn->prepare("SELECT(SUM(credit_hours)) AS hours FROM(
-								SELECT *
-								FROM (SELECT Course_List.course_id,credit_hours FROM Program_Courses, Course_List 
-								WHERE program_id=:pid AND concentration_id=:conid AND fulfills_communications=1 AND Program_Courses.course_id = Course_List.course_id 
-								) AS a
-								WHERE a.course_id IN 
-								(SELECT course_id FROM Courses_planning WHERE student_id = :sid)) AS communications_courses");
+	$result = $conn->prepare("SELECT COUNT(*) FROM (
+                            SELECT program_courses.dept_id,program_courses.course_id FROM program_courses  
+                            INNER JOIN courses_planning
+                            ON program_courses.dept_id = courses_planning.dept_id AND program_courses.course_id = courses_planning.course_id
+                            WHERE program_id = :pid AND concentration_id = :conid AND fulfills_communications = 1 AND courses_planning.student_id 
+                            = :sid) AS communications_courses");
 	$result->bindParam(':sid',$id);
 	$result->bindParam(':pid',$program);
 	$result->bindParam(':conid',$concentration);
@@ -776,93 +727,71 @@ if($rows > 0)
 <!DOCTYPE html>   
 <!-- This is a html file for the student's page within the virtual adviser -->
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"> 
-
 	<head>
 		<meta charset="UTF-8">
-		<title> Virtual Adviser</title>
-		<link rel="stylesheet" type="text/css" media='screen' href="css/student.screen.css">
-        <script> sr</script>
-        <script src="js/jquery.jsj"></script>
-        <script src="js/progressbar.js"></script>
-	</head>
-	<body>
+		<title> Virtual Adviser</title>		
+        <script src="./jqplot/src/jquery.js"></script>
+        <script src="./jqplot/src/jquery.jqplot.js"></script>
+        <script src="./jqplot/src/plugins/jqplot.barRenderer.js"></script>
+        <script src="./jqplot/src/plugins/jqplot.categoryAxisRenderer.js"></script>
+        <script src="./jqplot/src/plugins/jqplot.pointLabels.js"></script>
+        <script src="./testBars.js"></script>
+        <link rel="stylesheet" type="text/css" media='screen' href="css/student.screen.css">
+        <link rel="stylesheet" type="text/css" media='screen' href="./jqplot/src/jquery.jqplot.css"/>
+            
+            <!-- JQuery function using jplot to draw "progress" bars -->
+            <script>
+            $( document ).ready(function() {
+                var data = [[12, 1], [8, 2], [6, 3], [10, 4], [7, 5]];
+                var data2 = [[14, 1], [12, 2], [4, 3], [14, 4], [11, 5]];
+                var data3 = [[18, 1], [10, 2], [5, 3], [9, 4], [9, 5]];
+                var ticks = ['Germany', 'Italy', 'Spain', 'France', 'UK'];
+                var options = {
+                    animate: true,
+                    animateReplot: true,
+                    stackSeries: true,
+                    seriesDefaults: {
+                        renderer: $.jqplot.BarRenderer,
+                        pointLabels: {show: true,location: 'w'},
+                        rendererOptions: { 
+                            barMargin: 10,
+                            barDirection: 'horizontal'},
+                    },
+                    axesDefaults:{
+                        tickOptions: {textColor: '#ffffff'}
+                    },
+                    axes:{
+                        yaxis:{renderer: $.jqplot.CategoryAxisRenderer,
+                            ticks: ticks,
+                            tickOptions: {showGridline:false, showMark:false}
+                        },
+                        xaxis:{showTicks:false,
+                               show: false,
+                               tickOptions:{showGridline: false},
+                               rendererOptions:{drawBaseline:false}
+                        }
+                    },
+                    grid:{
+                        background:'transparent',
+                        drawBorder: false,
+                        shadow: false}
+                };
+                 $.jqplot('myChart', [data,data2,data3],options);
+            });
+            </script>
+ </head>
+    <body>
 		<!-- The div that displays the welcome message-->
 		<div class="welcome">
 			<h1><strong>Welcome, <?php echo $_SESSION['name'] ?>, I'm Professor Bruce, your Virtual Adviser</strong></h1>
-            <hr/>
-            <div class = "bardiv">
-                <p class = "alignleft">MAJOR</p>
-                <div id="progressBar" class = "alignleft">
-                    <div><script>progress(<?php echo $completed_major_percent ?>,$('#progressBar'));</script></div>
-                </div>
-                <div id="progressBar" class = "alignleft">
-                    <div><script>progress(<?php echo $taking_now_major_percent ?>,$('#progressBar'));</script></div>
-                </div>
-                <div id="progressBar" class = "alignleft">
-                    <div><script>progress(<?php echo $planning_major_percent ?>,$('#progressBar'));</script></div>
-                </div>
-                <br>
-                <p class = "alignleft">MATH</p>
-                <div id="progressBar" class = "alignleft">
-                    <div><script>progress(<?php echo $completed_math_percent ?>,$('#progressBar'));</script></div>
-                </div>
-                <div id="progressBar" class = "alignleft">
-                    <div><script>progress(<?php echo $taking_now_math_percent ?>,$('#progressBar'));</script></div>
-                </div>
-                <div id="progressBar" class = "alignleft">
-                    <div><script>progress(<?php echo $planning_math_percent ?>,$('#progressBar'));</script></div>
-                </div>
-                <br>
-                <p class = "alignleft">SCIENCE</p>
-                <div id="progressBar" class = "alignleft">
-                    <div><script>progress(<?php echo $completed_science_percent ?>,$('#progressBar'));</script></div>
-                </div>
-                <div id="progressBar" class = "alignleft">
-                    <div><script>progress(<?php echo $taking_now_science_percent ?>,$('#progressBar'));</script></div>
-                </div>
-                <div id="progressBar" class = "alignleft">
-                    <div><script>progress(<?php echo $planning_science_percent ?>,$('#progressBar'));</script></div>
-                </div>
-                <br>
-                <p class = "alignleft">SOCIAL SCIENCE</p>
-                <div id="progressBar" class = "alignleft">
-                    <div><script>progress(<?php echo $completed_social_science_percent ?>,$('#progressBar'));</script></div>
-                </div>
-                <div id="progressBar" class = "alignleft">
-                    <div><script>progress(<?php echo $taking_now_social_science_percent ?>,$('#progressBar'));</script></div>
-                </div>
-                <div id="progressBar" class = "alignleft">
-                    <div><script>progress(<?php echo $planning_social_science_percent ?>,$('#progressBar'));</script></div>
-                </div>
-                <br>
-                <p class = "alignleft">LIBERAL STUDIES</p>
-                <div id="progressBar" class = "alignleft">
-                    <div><script>progress(<?php echo $completed_liberal_percent ?>,$('#progressBar'));</script></div>
-                </div>
-                <div id="progressBar" class = "alignleft">
-                    <div><script>progress(<?php echo $taking_now_liberal_percent ?>,$('#progressBar'));</script></div>
-                </div>
-                <div id="progressBar" class = "alignleft">
-                    <div><script>progress(<?php echo $planning_liberal_percent ?>,$('#progressBar'));</script></div>
-                </div>
-                <br>
-                <p class = "alignleft">COMMUNICATIONS</p>
-                <div id="progressBar" class = "alignleft">
-                    <div><script>progress(<?php echo $completed_communication_percent ?>,$('#progressBar'));</script></div>
-                </div>
-                <div id="progressBar" class = "alignleft">
-                    <div><script>progress(<?php echo $taking_now_communication_percent ?>,$('#progressBar'));</script></div>
-                </div>
-                <div id="progressBar" class = "alignleft">
-                    <div><script>progress(<?php echo $planning_communication_percent ?>,$('#progressBar'));</script></div>
-                </div>
-                <br>
-            </div> <!-- end bardiv class div -->
-            <!--
             <p>Your degree program is <?php echo $program ?></p> 
 			<p>Your concentration is <?php echo $concentration ?></p>
+            <hr/>
+            <!-- draw "progress" bars -->
+            <div id="myChart" style="height:400px;width:500px; "></div>
 			<p>Total major hours: <?php echo $major_hours ?>  Total Completed: <?php echo $completed_major_hours ?></p>
 			<p>Completed major percentage: <?php echo $completed_major_percent ?>%</p>
+            <!--
 			<p>Math Option: <?php echo $math_option ?> Total hours: <?php echo $math_hours ?> Completed: <?php echo $completed_math_hours ?></p>
 			<p>Completed math percentage: <?php echo $completed_math_percent ?>%</p>
 			<p>Total science hours: <?php echo $science_hours ?>  Total Completed: <?php echo $completed_science_hours ?></p>
@@ -874,9 +803,9 @@ if($rows > 0)
 			<p>Total communications hours: <?php echo $communication_hours ?>  Total Completed: <?php echo $completed_communication_hours ?></p>
 			<p>Completed communications percentage: <?php echo $completed_communication_percent ?>%</p> -->
 			<!-- include the uncc white crown logo with green background -->
-			<hr />
+			
             <img src="images/CrownLogo_White.png" alt="UNCC Logo" style="width:194px;height:97px" class = "center">
-            
+
         </div> <!-- end welcome class div -->
         
 	</body>

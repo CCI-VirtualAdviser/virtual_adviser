@@ -35,14 +35,14 @@ SELECT * FROM program_courses;
 
 
 -- inserting transfer courses into courses_taken for fake student Edith Piaf
-INSERT INTO Courses_Taken (student_id,dept_id,course_id , letter_grade,semester_id,exemption_for) VALUES('800726001','ESCI','1101','TP','T',NULL);
-INSERT INTO Courses_Taken (student_id,dept_id,course_id , letter_grade,semester_id,exemption_for)VALUES('800726001','ESCI','1101L','TP','T',NULL);
-INSERT INTO Courses_Taken (student_id,dept_id,course_id , letter_grade,semester_id,exemption_for)VALUES('800726001','HIST','1120','TP','T','LBST 2101');
-INSERT INTO Courses_Taken (student_id,dept_id,course_id , letter_grade,semester_id,exemption_for)VALUES('800726001','HIST','1121','TP','T','LBST 2102');
-INSERT INTO Courses_Taken (student_id,dept_id,course_id , letter_grade,semester_id,exemption_for)VALUES('800726001','HIST','1160','TP','T','LBST 2101');
-INSERT INTO Courses_Taken (student_id,dept_id,course_id , letter_grade,semester_id,exemption_for)VALUES('800726001','HIST','1161','TP','T','LBST 2101');
-INSERT INTO Courses_Taken (student_id,dept_id,course_id , letter_grade,semester_id,exemption_for)VALUES('800726001','LBST','1105','TP','T',NULL);
-INSERT INTO Courses_Taken (student_id,dept_id,course_id , letter_grade,semester_id,exemption_for)VALUES('800726001','POLS','1110','TP','T',NULL);
+INSERT INTO Courses_Taken (student_id,dept_id,course_id , letter_grade,semester_id,exemption_for_dept,exepmtion_for_course) VALUES('800726001','ESCI','1101','TP','T',NULL,NULL);
+INSERT INTO Courses_Taken (student_id,dept_id,course_id , letter_grade,semester_id,exemption_for)VALUES('800726001','ESCI','1101L','TP','T',NULL,NULL);
+INSERT INTO Courses_Taken (student_id,dept_id,course_id , letter_grade,semester_id,exemption_for)VALUES('800726001','HIST','1120','TP','T','LBST','2101');
+INSERT INTO Courses_Taken (student_id,dept_id,course_id , letter_grade,semester_id,exemption_for)VALUES('800726001','HIST','1121','TP','T','LBST','2102');
+INSERT INTO Courses_Taken (student_id,dept_id,course_id , letter_grade,semester_id,exemption_for)VALUES('800726001','HIST','1160','TP','T','LBST','2101');
+INSERT INTO Courses_Taken (student_id,dept_id,course_id , letter_grade,semester_id,exemption_for)VALUES('800726001','HIST','1161','TP','T','LBST','2101');
+INSERT INTO Courses_Taken (student_id,dept_id,course_id , letter_grade,semester_id,exemption_for)VALUES('800726001','LBST','1105','TP','T',NULL,NULL);
+INSERT INTO Courses_Taken (student_id,dept_id,course_id , letter_grade,semester_id,exemption_for)VALUES('800726001','POLS','1110','TP','T',NULL,NULL);
 -- inserting transfer courses into courses_taken for fake student George Jetson
 INSERT INTO Courses_Taken (student_id,dept_id,course_id , letter_grade,semester_id,exemption_for)VALUES('800726002','BIOL','1110','TB','T',NULL);
 INSERT INTO Courses_Taken (student_id,dept_id,course_id , letter_grade,semester_id,exemption_for)VALUES('800726002','BIOL','1110L','TB','T',NULL);
