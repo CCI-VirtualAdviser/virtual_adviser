@@ -1,9 +1,7 @@
 USE virtual_adviser2;
-<<<<<<< HEAD
 
-select * from program_courses;
-=======
->>>>>>> feature/progressBar
+select * from program_courses WHERE dept_id = 'MATH' AND (fulfills_math2 = '1' or fulfills_math1 = '1');
+
 
 -- Insert courses into Program_Courses for Bachelor of Arts, Software Information Systems Concentration
 -- fulfills Major
@@ -34,7 +32,7 @@ select * from program_courses;
 	INSERT INTO Program_Courses (program_id,concentration_id,dept_id,course_id,fulfills_major,fulfills_writing,fulfills_math1,fulfills_math2,fulfills_science,fulfills_social_science,fulfills_liberalEd,fulfills_communications) VALUES ('Bachelor of Arts','Software Information Systems','PHIL','1105',1,0,0,0,0,0,0,0);
 -- fulfills Math Option 1
 	INSERT INTO Program_Courses (program_id,concentration_id,dept_id,course_id,fulfills_major,fulfills_writing,fulfills_math1,fulfills_math2,fulfills_science,fulfills_social_science,fulfills_liberalEd,fulfills_communications) VALUES ('Bachelor of Arts','Software Information Systems','MATH','1120',0,0,1,0,0,0,0,0);
-	INSERT INTO Program_Courses (program_id,concentration_id,dept_id,course_id,fulfills_major,fulfills_writing,fulfills_math1,fulfills_math2,fulfills_science,fulfills_social_science,fulfills_liberalEd,fulfills_communications) VALUES ('Bachelor of Arts','Software Information Systems','MATH','2164',0,0,1,0,0,0,0,0);
+	INSERT INTO Program_Courses (program_id,concentration_id,dept_id,course_id,fulfills_major,fulfills_writing,fulfills_math1,fulfills_math2,fulfills_science,fulfills_social_science,fulfills_liberalEd,fulfills_communications) VALUES ('Bachelor of Arts','Software Information Systems','MATH','2164',0,0,1,1,0,0,0,0);
 	INSERT INTO Program_Courses (program_id,concentration_id,dept_id,course_id,fulfills_major,fulfills_writing,fulfills_math1,fulfills_math2,fulfills_science,fulfills_social_science,fulfills_liberalEd,fulfills_communications) VALUES ('Bachelor of Arts','Software Information Systems','STAT','1220',0,0,1,0,0,0,0,0);
 	INSERT INTO Program_Courses (program_id,concentration_id,dept_id,course_id,fulfills_major,fulfills_writing,fulfills_math1,fulfills_math2,fulfills_science,fulfills_social_science,fulfills_liberalEd,fulfills_communications) VALUES ('Bachelor of Arts','Software Information Systems','STAT','1221',0,0,1,0,0,0,0,0);
 	INSERT INTO Program_Courses (program_id,concentration_id,dept_id,course_id,fulfills_major,fulfills_writing,fulfills_math1,fulfills_math2,fulfills_science,fulfills_social_science,fulfills_liberalEd,fulfills_communications) VALUES ('Bachelor of Arts','Software Information Systems','STAT','1222',0,0,1,0,0,0,0,0);
@@ -42,7 +40,6 @@ select * from program_courses;
 -- fulfills Math Option 2
 	INSERT INTO Program_Courses (program_id,concentration_id,dept_id,course_id,fulfills_major,fulfills_writing,fulfills_math1,fulfills_math2,fulfills_science,fulfills_social_science,fulfills_liberalEd,fulfills_communications) VALUES ('Bachelor of Arts','Software Information Systems','MATH','1241',0,0,0,1,0,0,0,0);
 	INSERT INTO Program_Courses (program_id,concentration_id,dept_id,course_id,fulfills_major,fulfills_writing,fulfills_math1,fulfills_math2,fulfills_science,fulfills_social_science,fulfills_liberalEd,fulfills_communications) VALUES ('Bachelor of Arts','Software Information Systems','MATH','1242',0,0,0,1,0,0,0,0);
-	INSERT INTO Program_Courses (program_id,concentration_id,dept_id,course_id,fulfills_major,fulfills_writing,fulfills_math1,fulfills_math2,fulfills_science,fulfills_social_science,fulfills_liberalEd,fulfills_communications) VALUES ('Bachelor of Arts','Software Information Systems','MATH','2164',0,0,0,1,0,0,0,0);
 	INSERT INTO Program_Courses (program_id,concentration_id,dept_id,course_id,fulfills_major,fulfills_writing,fulfills_math1,fulfills_math2,fulfills_science,fulfills_social_science,fulfills_liberalEd,fulfills_communications) VALUES ('Bachelor of Arts','Software Information Systems','STAT','2122',0,0,0,1,0,0,0,0);
 -- fulfills Writing
 	INSERT INTO Program_Courses (program_id,concentration_id,dept_id,course_id,fulfills_major,fulfills_writing,fulfills_math1,fulfills_math2,fulfills_science,fulfills_social_science,fulfills_liberalEd,fulfills_communications) VALUES ('Bachelor of Arts','Software Information Systems','UWRT','1101',0,1,0,0,0,0,0,0);
@@ -143,7 +140,7 @@ select * from program_courses;
 
 -- fulfills Math Option 1
 	INSERT INTO Program_Courses (program_id,concentration_id,dept_id,course_id,fulfills_major,fulfills_writing,fulfills_math1,fulfills_math2,fulfills_science,fulfills_social_science,fulfills_liberalEd,fulfills_communications) VALUES ('Bachelor of Arts','Web Development','MATH','1120',0,0,1,0,0,0,0,0);
-	INSERT INTO Program_Courses (program_id,concentration_id,dept_id,course_id,fulfills_major,fulfills_writing,fulfills_math1,fulfills_math2,fulfills_science,fulfills_social_science,fulfills_liberalEd,fulfills_communications) VALUES ('Bachelor of Arts','Web Development','MATH','2164',0,0,1,0,0,0,0,0);
+	INSERT INTO Program_Courses (program_id,concentration_id,dept_id,course_id,fulfills_major,fulfills_writing,fulfills_math1,fulfills_math2,fulfills_science,fulfills_social_science,fulfills_liberalEd,fulfills_communications) VALUES ('Bachelor of Arts','Web Development','MATH','2164',0,1,1,0,0,0,0,0);
 	INSERT INTO Program_Courses (program_id,concentration_id,dept_id,course_id,fulfills_major,fulfills_writing,fulfills_math1,fulfills_math2,fulfills_science,fulfills_social_science,fulfills_liberalEd,fulfills_communications) VALUES ('Bachelor of Arts','Web Development','STAT','1220',0,0,1,0,0,0,0,0);
 	INSERT INTO Program_Courses (program_id,concentration_id,dept_id,course_id,fulfills_major,fulfills_writing,fulfills_math1,fulfills_math2,fulfills_science,fulfills_social_science,fulfills_liberalEd,fulfills_communications) VALUES ('Bachelor of Arts','Web Development','STAT','1221',0,0,1,0,0,0,0,0);
 	INSERT INTO Program_Courses (program_id,concentration_id,dept_id,course_id,fulfills_major,fulfills_writing,fulfills_math1,fulfills_math2,fulfills_science,fulfills_social_science,fulfills_liberalEd,fulfills_communications) VALUES ('Bachelor of Arts','Web Development','STAT','1222',0,0,1,0,0,0,0,0);
@@ -151,7 +148,6 @@ select * from program_courses;
 -- fulfills Math Option 2
 	INSERT INTO Program_Courses (program_id,concentration_id,dept_id,course_id,fulfills_major,fulfills_writing,fulfills_math1,fulfills_math2,fulfills_science,fulfills_social_science,fulfills_liberalEd,fulfills_communications) VALUES ('Bachelor of Arts','Web Development','MATH','1241',0,0,0,1,0,0,0,0);
 	INSERT INTO Program_Courses (program_id,concentration_id,dept_id,course_id,fulfills_major,fulfills_writing,fulfills_math1,fulfills_math2,fulfills_science,fulfills_social_science,fulfills_liberalEd,fulfills_communications) VALUES ('Bachelor of Arts','Web Development','MATH','1242',0,0,0,1,0,0,0,0);
-	INSERT INTO Program_Courses (program_id,concentration_id,dept_id,course_id,fulfills_major,fulfills_writing,fulfills_math1,fulfills_math2,fulfills_science,fulfills_social_science,fulfills_liberalEd,fulfills_communications) VALUES ('Bachelor of Arts','Web Development','MATH','2164',0,0,0,1,0,0,0,0);
 	INSERT INTO Program_Courses (program_id,concentration_id,dept_id,course_id,fulfills_major,fulfills_writing,fulfills_math1,fulfills_math2,fulfills_science,fulfills_social_science,fulfills_liberalEd,fulfills_communications) VALUES ('Bachelor of Arts','Web Development','STAT','2122',0,0,0,1,0,0,0,0);
 -- fulfills Writing
 	INSERT INTO Program_Courses (program_id,concentration_id,dept_id,course_id,fulfills_major,fulfills_writing,fulfills_math1,fulfills_math2,fulfills_science,fulfills_social_science,fulfills_liberalEd,fulfills_communications) VALUES ('Bachelor of Arts','Web Development','UWRT','1101',0,1,0,0,0,0,0,0);
@@ -247,7 +243,7 @@ select * from program_courses;
 
 -- fulfills Math Option 1
 	INSERT INTO Program_Courses (program_id,concentration_id,dept_id,course_id,fulfills_major,fulfills_writing,fulfills_math1,fulfills_math2,fulfills_science,fulfills_social_science,fulfills_liberalEd,fulfills_communications) VALUES ('Bachelor of Arts','Software Engineering','MATH','1120',0,0,1,0,0,0,0,0);
-	INSERT INTO Program_Courses (program_id,concentration_id,dept_id,course_id,fulfills_major,fulfills_writing,fulfills_math1,fulfills_math2,fulfills_science,fulfills_social_science,fulfills_liberalEd,fulfills_communications) VALUES ('Bachelor of Arts','Software Engineering','MATH','2164',0,0,1,0,0,0,0,0);
+	INSERT INTO Program_Courses (program_id,concentration_id,dept_id,course_id,fulfills_major,fulfills_writing,fulfills_math1,fulfills_math2,fulfills_science,fulfills_social_science,fulfills_liberalEd,fulfills_communications) VALUES ('Bachelor of Arts','Software Engineering','MATH','2164',0,1,1,0,0,0,0,0);
 	INSERT INTO Program_Courses (program_id,concentration_id,dept_id,course_id,fulfills_major,fulfills_writing,fulfills_math1,fulfills_math2,fulfills_science,fulfills_social_science,fulfills_liberalEd,fulfills_communications) VALUES ('Bachelor of Arts','Software Engineering','STAT','1220',0,0,1,0,0,0,0,0);
 	INSERT INTO Program_Courses (program_id,concentration_id,dept_id,course_id,fulfills_major,fulfills_writing,fulfills_math1,fulfills_math2,fulfills_science,fulfills_social_science,fulfills_liberalEd,fulfills_communications) VALUES ('Bachelor of Arts','Software Engineering','STAT','1221',0,0,1,0,0,0,0,0);
 	INSERT INTO Program_Courses (program_id,concentration_id,dept_id,course_id,fulfills_major,fulfills_writing,fulfills_math1,fulfills_math2,fulfills_science,fulfills_social_science,fulfills_liberalEd,fulfills_communications) VALUES ('Bachelor of Arts','Software Engineering','STAT','1222',0,0,1,0,0,0,0,0);
@@ -255,7 +251,6 @@ select * from program_courses;
 -- fulfills Math Option 2
 	INSERT INTO Program_Courses (program_id,concentration_id,dept_id,course_id,fulfills_major,fulfills_writing,fulfills_math1,fulfills_math2,fulfills_science,fulfills_social_science,fulfills_liberalEd,fulfills_communications) VALUES ('Bachelor of Arts','Software Engineering','MATH','1241',0,0,0,1,0,0,0,0);
 	INSERT INTO Program_Courses (program_id,concentration_id,dept_id,course_id,fulfills_major,fulfills_writing,fulfills_math1,fulfills_math2,fulfills_science,fulfills_social_science,fulfills_liberalEd,fulfills_communications) VALUES ('Bachelor of Arts','Software Engineering','MATH','1242',0,0,0,1,0,0,0,0);
-	INSERT INTO Program_Courses (program_id,concentration_id,dept_id,course_id,fulfills_major,fulfills_writing,fulfills_math1,fulfills_math2,fulfills_science,fulfills_social_science,fulfills_liberalEd,fulfills_communications) VALUES ('Bachelor of Arts','Software Engineering','MATH','2164',0,0,0,1,0,0,0,0);
 	INSERT INTO Program_Courses (program_id,concentration_id,dept_id,course_id,fulfills_major,fulfills_writing,fulfills_math1,fulfills_math2,fulfills_science,fulfills_social_science,fulfills_liberalEd,fulfills_communications) VALUES ('Bachelor of Arts','Software Engineering','STAT','2122',0,0,0,1,0,0,0,0);
 -- fulfills Writing
 	INSERT INTO Program_Courses (program_id,concentration_id,dept_id,course_id,fulfills_major,fulfills_writing,fulfills_math1,fulfills_math2,fulfills_science,fulfills_social_science,fulfills_liberalEd,fulfills_communications) VALUES ('Bachelor of Arts','Software Engineering','UWRT','1101',0,1,0,0,0,0,0,0);
@@ -353,7 +348,7 @@ select * from program_courses;
 
 -- fulfills Math Option 1
 	INSERT INTO Program_Courses (program_id,concentration_id,dept_id,course_id,fulfills_major,fulfills_writing,fulfills_math1,fulfills_math2,fulfills_science,fulfills_social_science,fulfills_liberalEd,fulfills_communications) VALUES ('Bachelor of Arts','Cyber Security','MATH','1120',0,0,1,0,0,0,0,0);
-	INSERT INTO Program_Courses (program_id,concentration_id,dept_id,course_id,fulfills_major,fulfills_writing,fulfills_math1,fulfills_math2,fulfills_science,fulfills_social_science,fulfills_liberalEd,fulfills_communications) VALUES ('Bachelor of Arts','Cyber Security','MATH','2164',0,0,1,0,0,0,0,0);
+	INSERT INTO Program_Courses (program_id,concentration_id,dept_id,course_id,fulfills_major,fulfills_writing,fulfills_math1,fulfills_math2,fulfills_science,fulfills_social_science,fulfills_liberalEd,fulfills_communications) VALUES ('Bachelor of Arts','Cyber Security','MATH','2164',0,1,1,0,0,0,0,0);
 	INSERT INTO Program_Courses (program_id,concentration_id,dept_id,course_id,fulfills_major,fulfills_writing,fulfills_math1,fulfills_math2,fulfills_science,fulfills_social_science,fulfills_liberalEd,fulfills_communications) VALUES ('Bachelor of Arts','Cyber Security','STAT','1220',0,0,1,0,0,0,0,0);
 	INSERT INTO Program_Courses (program_id,concentration_id,dept_id,course_id,fulfills_major,fulfills_writing,fulfills_math1,fulfills_math2,fulfills_science,fulfills_social_science,fulfills_liberalEd,fulfills_communications) VALUES ('Bachelor of Arts','Cyber Security','STAT','1221',0,0,1,0,0,0,0,0);
 	INSERT INTO Program_Courses (program_id,concentration_id,dept_id,course_id,fulfills_major,fulfills_writing,fulfills_math1,fulfills_math2,fulfills_science,fulfills_social_science,fulfills_liberalEd,fulfills_communications) VALUES ('Bachelor of Arts','Cyber Security','STAT','1222',0,0,1,0,0,0,0,0);
@@ -361,7 +356,6 @@ select * from program_courses;
 -- fulfills Math Option 2
 	INSERT INTO Program_Courses (program_id,concentration_id,dept_id,course_id,fulfills_major,fulfills_writing,fulfills_math1,fulfills_math2,fulfills_science,fulfills_social_science,fulfills_liberalEd,fulfills_communications) VALUES ('Bachelor of Arts','Cyber Security','MATH','1241',0,0,0,1,0,0,0,0);
 	INSERT INTO Program_Courses (program_id,concentration_id,dept_id,course_id,fulfills_major,fulfills_writing,fulfills_math1,fulfills_math2,fulfills_science,fulfills_social_science,fulfills_liberalEd,fulfills_communications) VALUES ('Bachelor of Arts','Cyber Security','MATH','1242',0,0,0,1,0,0,0,0);
-	INSERT INTO Program_Courses (program_id,concentration_id,dept_id,course_id,fulfills_major,fulfills_writing,fulfills_math1,fulfills_math2,fulfills_science,fulfills_social_science,fulfills_liberalEd,fulfills_communications) VALUES ('Bachelor of Arts','Cyber Security','MATH','2164',0,0,0,1,0,0,0,0);
 	INSERT INTO Program_Courses (program_id,concentration_id,dept_id,course_id,fulfills_major,fulfills_writing,fulfills_math1,fulfills_math2,fulfills_science,fulfills_social_science,fulfills_liberalEd,fulfills_communications) VALUES ('Bachelor of Arts','Cyber Security','STAT','2122',0,0,0,1,0,0,0,0);
 -- fulfills Writing
 	INSERT INTO Program_Courses (program_id,concentration_id,dept_id,course_id,fulfills_major,fulfills_writing,fulfills_math1,fulfills_math2,fulfills_science,fulfills_social_science,fulfills_liberalEd,fulfills_communications) VALUES ('Bachelor of Arts','Cyber Security','UWRT','1101',0,1,0,0,0,0,0,0);
@@ -456,7 +450,7 @@ select * from program_courses;
 
 -- fulfills Math Option 1
 	INSERT INTO Program_Courses (program_id,concentration_id,dept_id,course_id,fulfills_major,fulfills_writing,fulfills_math1,fulfills_math2,fulfills_science,fulfills_social_science,fulfills_liberalEd,fulfills_communications) VALUES ('Bachelor of Arts','Information Technology','MATH','1120',0,0,1,0,0,0,0,0);
-	INSERT INTO Program_Courses (program_id,concentration_id,dept_id,course_id,fulfills_major,fulfills_writing,fulfills_math1,fulfills_math2,fulfills_science,fulfills_social_science,fulfills_liberalEd,fulfills_communications) VALUES ('Bachelor of Arts','Information Technology','MATH','2164',0,0,1,0,0,0,0,0);
+	INSERT INTO Program_Courses (program_id,concentration_id,dept_id,course_id,fulfills_major,fulfills_writing,fulfills_math1,fulfills_math2,fulfills_science,fulfills_social_science,fulfills_liberalEd,fulfills_communications) VALUES ('Bachelor of Arts','Information Technology','MATH','2164',0,1,1,0,0,0,0,0);
 	INSERT INTO Program_Courses (program_id,concentration_id,dept_id,course_id,fulfills_major,fulfills_writing,fulfills_math1,fulfills_math2,fulfills_science,fulfills_social_science,fulfills_liberalEd,fulfills_communications) VALUES ('Bachelor of Arts','Information Technology','STAT','1220',0,0,1,0,0,0,0,0);
 	INSERT INTO Program_Courses (program_id,concentration_id,dept_id,course_id,fulfills_major,fulfills_writing,fulfills_math1,fulfills_math2,fulfills_science,fulfills_social_science,fulfills_liberalEd,fulfills_communications) VALUES ('Bachelor of Arts','Information Technology','STAT','1221',0,0,1,0,0,0,0,0);
 	INSERT INTO Program_Courses (program_id,concentration_id,dept_id,course_id,fulfills_major,fulfills_writing,fulfills_math1,fulfills_math2,fulfills_science,fulfills_social_science,fulfills_liberalEd,fulfills_communications) VALUES ('Bachelor of Arts','Information Technology','STAT','1222',0,0,1,0,0,0,0,0);
@@ -464,7 +458,6 @@ select * from program_courses;
 -- fulfills Math Option 2
 	INSERT INTO Program_Courses (program_id,concentration_id,dept_id,course_id,fulfills_major,fulfills_writing,fulfills_math1,fulfills_math2,fulfills_science,fulfills_social_science,fulfills_liberalEd,fulfills_communications) VALUES ('Bachelor of Arts','Information Technology','MATH','1241',0,0,0,1,0,0,0,0);
 	INSERT INTO Program_Courses (program_id,concentration_id,dept_id,course_id,fulfills_major,fulfills_writing,fulfills_math1,fulfills_math2,fulfills_science,fulfills_social_science,fulfills_liberalEd,fulfills_communications) VALUES ('Bachelor of Arts','Information Technology','MATH','1242',0,0,0,1,0,0,0,0);
-	INSERT INTO Program_Courses (program_id,concentration_id,dept_id,course_id,fulfills_major,fulfills_writing,fulfills_math1,fulfills_math2,fulfills_science,fulfills_social_science,fulfills_liberalEd,fulfills_communications) VALUES ('Bachelor of Arts','Information Technology','MATH','2164',0,0,0,1,0,0,0,0);
 	INSERT INTO Program_Courses (program_id,concentration_id,dept_id,course_id,fulfills_major,fulfills_writing,fulfills_math1,fulfills_math2,fulfills_science,fulfills_social_science,fulfills_liberalEd,fulfills_communications) VALUES ('Bachelor of Arts','Information Technology','STAT','2122',0,0,0,1,0,0,0,0);
 -- fulfills Writing
 	INSERT INTO Program_Courses (program_id,concentration_id,dept_id,course_id,fulfills_major,fulfills_writing,fulfills_math1,fulfills_math2,fulfills_science,fulfills_social_science,fulfills_liberalEd,fulfills_communications) VALUES ('Bachelor of Arts','Information Technology','UWRT','1101',0,1,0,0,0,0,0,0);
@@ -532,6 +525,7 @@ select * from program_courses;
 	INSERT INTO Program_Courses (program_id,concentration_id,dept_id,course_id,fulfills_major,fulfills_writing,fulfills_math1,fulfills_math2,fulfills_science,fulfills_social_science,fulfills_liberalEd,fulfills_communications) VALUES ('Bachelor of Arts','Information Technology','ECON','2102',0,0,0,0,0,1,0,0);
 	INSERT INTO Program_Courses (program_id,concentration_id,dept_id,course_id,fulfills_major,fulfills_writing,fulfills_math1,fulfills_math2,fulfills_science,fulfills_social_science,fulfills_liberalEd,fulfills_communications) VALUES ('Bachelor of Arts','Information Technology','POLS','1110',0,0,0,0,0,1,0,0);
 	INSERT INTO Program_Courses (program_id,concentration_id,dept_id,course_id,fulfills_major,fulfills_writing,fulfills_math1,fulfills_math2,fulfills_science,fulfills_social_science,fulfills_liberalEd,fulfills_communications) VALUES ('Bachelor of Arts','Information Technology','SOCY','1101',0,0,0,0,0,1,0,0);
+-- ADD math2 to 2164
 	
 	
 
