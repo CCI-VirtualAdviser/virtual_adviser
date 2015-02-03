@@ -1,4 +1,4 @@
-USE virtual_adviser;
+USE virtual_adviser2;
 SET SQL_SAFE_UPDATES = 0;
 SET SQL_MODE = '';
 
@@ -159,6 +159,22 @@ INSERT INTO course_list VALUES ('ARCH 4201','Architectural History I: Pre-histor
 -- Updates to HONR  courses added since 2009-2010
 INSERT INTO course_list VALUES ('HONR 2100','Architectural History I: Pre-history-1750',3);
 
+-- Updates to ITIS/ITCS  courses added since 2009-2010
+use virtual_adviser2;
+INSERT INTO course_list (dept_id,course_id,course_name,credit_hours) VALUES ('ITIS','1212','Introduction to Media Programming I',3);
+INSERT INTO course_list (dept_id,course_id,course_name,credit_hours) VALUES ('ITIS','1212L','Introduction to Media Programming I Lab',0);
+INSERT INTO course_list (dept_id,course_id,course_name,credit_hours) VALUES ('ITIS','1213','Introduction to Media Programming II',3);
+INSERT INTO course_list (dept_id,course_id,course_name,credit_hours) VALUES ('ITIS','1213L','Introduction to Media Programming II Lab',0);
+INSERT INTO course_list (dept_id,course_id,course_name,credit_hours) VALUES ('ITIS','1600','Computing Professionals',3);
+INSERT INTO course_list (dept_id,course_id,course_name,credit_hours) VALUES ('ITIS','2600','Computing Professionals',3);
+INSERT INTO course_list (dept_id,course_id,course_name,credit_hours) VALUES ('ITCS','1600','Computing Professionals',3);
+INSERT INTO course_list (dept_id,course_id,course_name,credit_hours) VALUES ('ITCS','2600','Computing Professionals',3);
+INSERT INTO course_list (dept_id,course_id,course_name,credit_hours) VALUES ('ITIS','3300','Software Requirements and Project Management',3);
+INSERT INTO course_list (dept_id,course_id,course_name,credit_hours) VALUES ('ITIS','3320','Introduction to Software Testing and Assurance',3);
+
+
+SELECT * FROM course_list WHERE dept_id LIKE 'ITIS%';
+
 -- Need to update and add courses from each year between 2009 and 2015 (some courses are no longer offered
 -- in 2015 year but are still on transfer credit
 
@@ -168,5 +184,9 @@ INSERT INTO course_list VALUES ('HONR 2100','Architectural History I: Pre-histor
 -- what is this????!  800726006,LTAM 2002, B, 201110 "Topics in LTAM - Historical Context"?
 
 
-SELECT * FROM course_list WHERE course_id LIKE 'KNES%';
+SELECT * FROM course_list WHERE dept_id LIKE 'ITIS%' AND course_id = 2600;
 -- SELECT * From course_list WHERE course_id LIKE 'ITIS%' OR course_id LIKE 'ITCS%';
+
+INSERT INTO course_list (dept_id,course_id,course_name,credit_hours) VALUES ('UWRT','1101','Writing and Inquiry in Academic Contexts I',3);
+INSERT INTO course_list (dept_id,course_id,course_name,credit_hours) VALUES ('UWRT','1102','Writing and Inquiry in Academic Contexts II',3);
+INSERT INTO course_list (dept_id,course_id,course_name,credit_hours) VALUES ('UWRT','1103','Writing and Inquiry in Academic Contexts I & II',3);

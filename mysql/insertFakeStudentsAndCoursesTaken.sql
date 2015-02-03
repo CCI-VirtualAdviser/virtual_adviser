@@ -131,7 +131,6 @@ INSERT INTO Courses_Taken (student_id,dept_id,course_id , letter_grade,semester_
 INSERT INTO Courses_Taken (student_id,dept_id,course_id , letter_grade,semester_id,exemption_for_dept,exemption_for_course)VALUES('800726015','GEOG','1101','TA','T',NULL,NULL);
 INSERT INTO Courses_Taken (student_id,dept_id,course_id , letter_grade,semester_id,exemption_for_dept,exemption_for_course)VALUES('800726015','INFO','2130','TA','T',NULL,NULL);
 INSERT INTO Courses_Taken (student_id,dept_id,course_id , letter_grade,semester_id,exemption_for_dept,exemption_for_course)VALUES('800726015','LBST','1103','TA','T',NULL,NULL);
-INSERT INTO Courses_Taken (student_id,dept_id,course_id , letter_grade,semester_id,exemption_for_dept,exemption_for_course)VALUES('800726015','PSYC','1101','TC','T',NULL,NULL);
 INSERT INTO Courses_Taken (student_id,dept_id,course_id , letter_grade,semester_id,exemption_for_dept,exemption_for_course)VALUES('800726015','MATH','1100','TA','T',NULL,NULL);
 
 -- test queries
@@ -156,14 +155,13 @@ INSERT INTO Courses_Taken (student_id,dept_id,course_id , letter_grade,semester_
 INSERT INTO Courses_Taken (student_id,dept_id,course_id , letter_grade,semester_id,exemption_for_dept,exemption_for_course)VALUES('800726001','ITIS','2110L','B','201380',NULL,NULL);
 INSERT INTO Courses_Taken (student_id,dept_id,course_id , letter_grade,semester_id,exemption_for_dept,exemption_for_course)VALUES('800726001','ITIS','2300','B','201310',NULL,NULL);
 INSERT INTO Courses_Taken (student_id,dept_id,course_id , letter_grade,semester_id,exemption_for_dept,exemption_for_course)VALUES('800726001','ITIS','3200','B','201410',NULL,NULL);
-INSERT INTO Courses_Taken (student_id,dept_id,course_id , letter_grade,semester_id,exemption_for_dept,exemption_for_course)VALUES('800726001','ITIS','3300','A','301450',NULL,NULL);
-INSERT INTO Courses_Taken (student_id,dept_id,course_id , letter_grade,semester_id,exemption_for_dept,exemption_for_course)VALUES('800726001','ITIS','3310','B','201470',NULL,NULL);
 INSERT INTO Courses_Taken (student_id,dept_id,course_id , letter_grade,semester_id,exemption_for_dept,exemption_for_course)VALUES('800726001','ITIS','3153','A','201380',NULL,NULL);
 INSERT INTO Courses_Taken (student_id,dept_id,course_id , letter_grade,semester_id,exemption_for_dept,exemption_for_course)VALUES('800726001','LBST','2101','C','201380',NULL,NULL);
 INSERT INTO Courses_Taken (student_id,dept_id,course_id , letter_grade,semester_id,exemption_for_dept,exemption_for_course)VALUES('800726001','LBST','2102','C','201470',NULL,NULL);
 INSERT INTO Courses_Taken (student_id,dept_id,course_id , letter_grade,semester_id,exemption_for_dept,exemption_for_course)VALUES('800726001','MATH','2164','D','201280',NULL,NULL);
 INSERT INTO Courses_Taken (student_id,dept_id,course_id , letter_grade,semester_id,exemption_for_dept,exemption_for_course)VALUES('800726001','STAT','1220','D','201210',NULL,NULL);
 INSERT INTO Courses_Taken (student_id,dept_id,course_id , letter_grade,semester_id,exemption_for_dept,exemption_for_course)VALUES('800726001','PHIL','1105','B','201180',NULL,NULL);
-INSERT INTO Courses_Taken (student_id,dept_id,course_id , letter_grade,semester_id,exemption_for_dept,exemption_for_course)VALUES('800726001','PHYS','1103','C','201280',NULL,NULL);
+INSERT INTO Courses_Taken (student_id,dept_id,course_id , letter_grade,semester_id,exemption_for_dept,exemption_for_course)VALUES('800726001','PHYS','1101','C','201280',NULL,NULL);
+INSERT INTO Courses_Taken (student_id,dept_id,course_id , letter_grade,semester_id,exemption_for_dept,exemption_for_course)VALUES('800726001','PHYS','1101L','C','201280',NULL,NULL);
 
 

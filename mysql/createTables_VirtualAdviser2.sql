@@ -45,7 +45,7 @@ CREATE TABLE IF NOT EXISTS `virtual_adviser2`.`course_list` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = latin1;
 
-
+drop table corequisites;
 -- -----------------------------------------------------
 -- Table `virtual_adviser2`.`corequisites`
 -- -----------------------------------------------------
@@ -59,7 +59,8 @@ CREATE TABLE IF NOT EXISTS `virtual_adviser2`.`corequisites` (
     FOREIGN KEY (`course_id`)
     REFERENCES `virtual_adviser2`.`course_list` (`course_id`)
     ON DELETE CASCADE
-    ON UPDATE CASCADE)
+    ON UPDATE CASCADE,
+    INDEX `course_id_idx2` (`dept_id` ASC))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = latin1;
 
@@ -112,7 +113,7 @@ CREATE TABLE IF NOT EXISTS `virtual_adviser2`.`students` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = latin1;
 
-
+DROP TABLE courses_planning;
 -- -----------------------------------------------------
 -- Table `virtual_adviser2`.`courses_planning`
 -- -----------------------------------------------------
@@ -122,15 +123,9 @@ CREATE TABLE IF NOT EXISTS `virtual_adviser2`.`courses_planning` (
   `dept_id` VARCHAR(4) NOT NULL,
   PRIMARY KEY (`student_id`, `course_id`, `dept_id`),
   INDEX `student_id_idx` (`student_id` ASC),
-  INDEX `course_id_idx` (`course_id` ASC),
   CONSTRAINT `courses_planning_ibfk_1`
     FOREIGN KEY (`student_id`)
     REFERENCES `virtual_adviser2`.`students` (`student_id`)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE,
-  CONSTRAINT `courses_planning_ibfk_2`
-    FOREIGN KEY (`course_id`)
-    REFERENCES `virtual_adviser2`.`course_list` (`course_id`)
     ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB
@@ -319,7 +314,7 @@ CREATE TABLE IF NOT EXISTS `virtual_adviser2`.`program_courses` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = latin1;
 
-
+drop table substitutions;
 -- -----------------------------------------------------
 -- Table `virtual_adviser2`.`substitutions`
 -- -----------------------------------------------------
@@ -343,40 +338,46 @@ CREATE TABLE IF NOT EXISTS `virtual_adviser2`.`substitutions` (
     FOREIGN KEY (`course_id`)
     REFERENCES `virtual_adviser2`.`course_list` (`course_id`)
     ON DELETE CASCADE
-    ON UPDATE CASCADE,
-  CONSTRAINT `substitutions_ibfk_3`
-    FOREIGN KEY (`course_sub_dept_id`)
-    REFERENCES `virtual_adviser2`.`course_list` (`course_id`)
-    ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = latin1;
 
+drop table course_equivalence;
+-- -----------------------------------------------------
+-- Table `virtual_adviser2`.`course_equivalence`
+-- -----------------------------------------------------
+-- MySQL Workbench Forward Engineering
+
+SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
+
+-- -----------------------------------------------------
+-- Schema virtual_adviser2
+-- -----------------------------------------------------
+-- virtual_adviser2 was created on 12/28/2014 in order to split the course_id into two columns now: course_id (like "3120") and dept_id (like "ITIS")
+
+-- -----------------------------------------------------
+-- Schema virtual_adviser2
+--
+-- virtual_adviser2 was created on 12/28/2014 in order to split the course_id into two columns now: course_id (like "3120") and dept_id (like "ITIS")
+-- -----------------------------------------------------
+CREATE SCHEMA IF NOT EXISTS `virtual_adviser2` DEFAULT CHARACTER SET latin1 ;
+USE `virtual_adviser2` ;
 
 -- -----------------------------------------------------
 -- Table `virtual_adviser2`.`course_equivalence`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `virtual_adviser2`.`course_equivalence` (
   `course_id` VARCHAR(11) NOT NULL,
-  `course_sub` VARCHAR(11) NOT NULL,
+  `course_eq` VARCHAR(11) NOT NULL,
   `dept_id` VARCHAR(4) NOT NULL,
-  PRIMARY KEY (`course_id`, `course_sub`, `dept_id`),
-  INDEX `fk2_idx` (`course_sub` ASC),
-  CONSTRAINT `fk1`
-    FOREIGN KEY (`course_id`)
-    REFERENCES `virtual_adviser2`.`course_list` (`course_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk2`
-    FOREIGN KEY (`course_sub`)
-    REFERENCES `virtual_adviser2`.`course_list` (`course_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+  `dept_eq` VARCHAR(4) NOT NULL,
+  PRIMARY KEY (`course_id`, `course_eq`, `dept_id`, `dept_eq`))
 ENGINE = InnoDB;
 
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
-
 

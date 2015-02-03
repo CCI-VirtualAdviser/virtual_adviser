@@ -73,7 +73,7 @@ img.center {
 }
 
 .welcome {
-	height: 600px;
+	height: 800px;
 	width: 700px;
 	position: absolute;
 	left: 50%;
@@ -82,7 +82,7 @@ img.center {
 	border-radius: 10px; 
 	text-align: center;
 	/* set margins to offset 50% of the width and height */
-	margin: -300px 0 0 -350px;
+	margin: -400px 0 0 -350px;
 }
 
 .alignleft {
