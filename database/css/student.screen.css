@@ -73,16 +73,19 @@ img.center {
 }
 
 .welcome {
-	height: 800px;
+	height: 600px;
 	width: 700px;
+	/*
 	position: absolute;
 	left: 50%;
-	top: 50%;
+	top: 50%; 
+	margin: -300px 0 0 -350px;
+	*/
 	background-color: #00703C;
 	border-radius: 10px; 
 	text-align: center;
 	/* set margins to offset 50% of the width and height */
-	margin: -400px 0 0 -350px;
+	
 }
 
 .alignleft {

@@ -7,7 +7,7 @@ $errflag = false;
 $username = 'root';
 $password = '';
 $url = 'localhost';
-$database = 'virtual_adviser3';
+$database = 'virtual_adviser';
 
 /*	Note that above variables are using single quote for string. When they
 	get replaced in the connection statement below, single quotes within
@@ -27,7 +27,6 @@ try
 }	
 catch (PDOException $e)
 {
-	echo $e;
 	$output = 'Unable to connect to the database server.'.							//the '.' is the concatenation operator for a string
 	$e->getMessage();																//the '->' is the equivalent of the dot operator in Java
 	include 'error.html.php';
