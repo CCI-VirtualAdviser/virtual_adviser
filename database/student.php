@@ -50,8 +50,8 @@ if($rows > 0)
                 FROM course_list c
                 INNER JOIN program_courses p
                 ON c.dept_id=p.dept_id AND c.course_id=p.course_id
-                WHERE p.program_id = 'Bachelor of Arts' AND
-                    p.concentration_id = 'Web Development' AND p.fulfills_major = 1");
+                WHERE p.program_id = :pid AND
+                    p.concentration_id = :conid AND p.fulfills_major = 1");
         $result->bindParam(':pid',$program);
         $result->bindParam(':conid',$concentration);
         $result->execute();
@@ -62,7 +62,7 @@ if($rows > 0)
 	$result->execute();
 	$major_hours = $result->fetchColumn();
     
-    //now, the variable $major_hours contains is the sum of all the rows returned by the query above, which includes duplicates like
+    //now, the variable $major_hours contains the sum of all the rows returned by the query above, which includes duplicates like
     //PHIL 1105 and PHIL 1106, so we need to subtract the duplicate credits
     $result = $conn->prepare("SELECT SUM(credit_hours) FROM(
                                 SELECT m.dept_id,m.course_id,m.credit_hours
@@ -85,6 +85,12 @@ if($rows > 0)
 	$result->bindParam(':sid',$id);
 	$result->execute();
     $completed_major_hours = $result->fetchColumn();
+	
+	//if completed major hours is greater than those required, set completed major hours to total required and the rest will be electives
+	if ($completed_major_hours > $major_hours)
+	{
+		$completed_major_hours = $major_hours;
+	}
 	if($major_hours == 0)
     {
         $completed_major_percent = 0;
@@ -111,8 +117,8 @@ if($rows > 0)
                 FROM course_list c
                 INNER JOIN program_courses p
                 ON c.dept_id=p.dept_id AND c.course_id=p.course_id
-                WHERE p.program_id = 'Bachelor of Arts' AND
-                    p.concentration_id = 'Web Development' AND p.fulfills_math1 = 1");
+                WHERE p.program_id = :pid AND
+                    p.concentration_id = :conid AND p.fulfills_math1 = 1");
         $result->bindParam(':pid',$program);
         $result->bindParam(':conid',$concentration);
         $result->execute();
@@ -122,13 +128,14 @@ if($rows > 0)
                 FROM course_list c
                 INNER JOIN program_courses p
                 ON c.dept_id=p.dept_id AND c.course_id=p.course_id
-                WHERE p.program_id = 'Bachelor of Arts' AND
-                    p.concentration_id = 'Web Development' AND p.fulfills_math2 = 1");
+                WHERE p.program_id = :pid AND
+                    p.concentration_id = :conid AND p.fulfills_math2 = 1");
         $result->bindParam(':pid',$program);
         $result->bindParam(':conid',$concentration);
         $result->execute();
     
 	//get the total hours for that option
+	//note probably not necessary to use === instead of == for math option but leaving it in for now until it comes time to clean up messy code
     if($math_option === 1)
     {
         $result = $conn->prepare("SELECT SUM(credit_hours) FROM(
@@ -136,8 +143,8 @@ if($rows > 0)
                             FROM course_list c
                             INNER JOIN program_courses p
                             ON c.dept_id=p.dept_id AND c.course_id=p.course_id
-                            WHERE p.program_id = 'Bachelor of Arts' AND
-                                p.concentration_id = 'Web Development' AND p.fulfills_math1 = 1) AS math1_hours");
+                            WHERE p.program_id = :pid AND
+                                p.concentration_id = :conid AND p.fulfills_math1 = 1) AS math1_hours");
         $result->bindParam(':pid',$program);
         $result->bindParam(':conid',$concentration);
         $result->execute();
@@ -162,8 +169,8 @@ if($rows > 0)
                                 FROM course_list c
                                 INNER JOIN program_courses p
                                 ON c.dept_id=p.dept_id AND c.course_id=p.course_id
-                                WHERE p.program_id = 'Bachelor of Arts' AND
-                                p.concentration_id = 'Web Development' AND p.fulfills_math2 = 1) AS math2_hours");
+                                WHERE p.program_id = :pid AND
+                                p.concentration_id = :conid AND p.fulfills_math2 = 1) AS math2_hours");
         $result->bindParam(':pid',$program);
         $result->bindParam(':conid',$concentration);
         $result->execute();
@@ -182,6 +189,11 @@ if($rows > 0)
         $completed_math_hours = $result->fetch();
         
     }
+	//if completed math hours is greater than those required, set completed math hours to total required and the rest will be electives
+	if ($completed_math_hours > $math_hours)
+	{
+		$completed_math_hours = $math_hours;
+	}
 
 	if($math_hours == 0)
     {
@@ -211,8 +223,8 @@ if($rows > 0)
                 FROM course_list c
                 INNER JOIN program_courses p
                 ON c.dept_id=p.dept_id AND c.course_id=p.course_id
-                WHERE p.program_id = 'Bachelor of Arts' AND
-                    p.concentration_id = 'Web Development' AND p.fulfills_science = 1");
+                WHERE p.program_id = :pid AND
+                    p.concentration_id = :conid AND p.fulfills_science = 1");
         $result->bindParam(':pid',$program);
         $result->bindParam(':conid',$concentration);
         $result->execute();
@@ -227,6 +239,12 @@ if($rows > 0)
 	$result->bindParam(':sid',$id);
 	$result->execute();
     $completed_science_hours = $result->fetchColumn();
+	
+	//if completed science hours is greater than those required, set completed science hours to total required and the rest will be electives
+	if ($completed_science_hours > $science_hours)
+	{
+		$completed_science_hours = $science_hours;
+	}
     
 	if($science_hours == 0)
     {
@@ -250,8 +268,8 @@ if($rows > 0)
                 FROM course_list c
                 INNER JOIN program_courses p
                 ON c.dept_id=p.dept_id AND c.course_id=p.course_id
-                WHERE p.program_id = 'Bachelor of Arts' AND
-                    p.concentration_id = 'Web Development' AND p.fulfills_social_science = 1");
+                WHERE p.program_id = :pid AND
+                    p.concentration_id = :conid AND p.fulfills_social_science = 1");
         $result->bindParam(':pid',$program);
         $result->bindParam(':conid',$concentration);
         $result->execute();
@@ -267,6 +285,12 @@ if($rows > 0)
 	$result->execute();
     $completed_social_science_hours = $result->fetchColumn();
     
+	//if completed social hours is greater than those required, set completed social hours to total required and the rest will be electives
+	if ($completed_social_science_hours > $social_science_hours)
+	{
+		$completed_social_science_hours = $social_science_hours;
+	}
+	
 	if($social_science_hours == 0)
     {
         $completed_social_science_percent = 0;
@@ -292,8 +316,8 @@ if($rows > 0)
                 FROM course_list c
                 INNER JOIN program_courses p
                 ON c.dept_id=p.dept_id AND c.course_id=p.course_id
-                WHERE p.program_id = 'Bachelor of Arts' AND
-                    p.concentration_id = 'Web Development' AND p.fulfills_liberalEd = 1");
+                WHERE p.program_id = :pid AND
+                    p.concentration_id = :conid AND p.fulfills_liberalEd = 1");
         $result->bindParam(':pid',$program);
         $result->bindParam(':conid',$concentration);
         $result->execute();
@@ -309,7 +333,13 @@ if($rows > 0)
 	$result->execute();
     $completed_liberal_hours = $result->fetchColumn();
 	
-	   $completed_liberal_percent = number_format(($completed_liberal_hours/$liberal_hours)*100,2,'.','');
+	//if completed liberal hours is greater than those required, set completed liberal hours to total required and the rest will be electives
+	if ($completed_liberal_hours > $liberal_hours)
+	{
+		$completed_liberal_hours = $liberal_hours;
+	}
+	
+	$completed_liberal_percent = number_format(($completed_liberal_hours/$liberal_hours)*100,2,'.','');
 	
 	if ($completed_liberal_percent > 100)
 	{
@@ -332,8 +362,8 @@ if($rows > 0)
                 FROM course_list c
                 INNER JOIN program_courses p
                 ON c.dept_id=p.dept_id AND c.course_id=p.course_id
-                WHERE p.program_id = 'Bachelor of Arts' AND
-                    p.concentration_id = 'Web Development' AND p.fulfills_writing = 1");
+                WHERE p.program_id = :pid AND
+                    p.concentration_id = :conid AND p.fulfills_writing_communications = 1");
         $result->bindParam(':pid',$program);
         $result->bindParam(':conid',$concentration);
         $result->execute();
@@ -349,6 +379,12 @@ if($rows > 0)
 	$result->execute();
     $completed_communication_hours = $result->fetchColumn();
 	
+	//if completed communication hours is greater than those required, set completed communication hours to total required and the rest will be electives
+	if ($completed_communication_hours > $communication_hours)
+	{
+		$completed_communication_hours = $communication_hours;
+	}
+	
 	//student cannot complete more than 100% of a program, so if the completed percentage is greater than 100 make it 100
 	   $completed_communication_percent = number_format(($completed_communication_hours/$communication_hours)*100,2,'.','');
     
@@ -357,8 +393,8 @@ if($rows > 0)
 		$completed_communication_percent = number_format(100,2,'.','');
 	}
 
-//get hours taking now for major
-     $result = $conn->prepare("CREATE OR REPLACE VIEW major_now (dept_id,course_id,credit_hours) AS
+	//get all courses student is taking now
+     $result = $conn->prepare("CREATE OR REPLACE VIEW courses_now (dept_id,course_id,credit_hours) AS
                                 SELECT c.dept_id,c.course_id,p.credit_hours 
                                 FROM courses_taking_now c
                                 INNER JOIN course_list p
@@ -366,32 +402,52 @@ if($rows > 0)
                                 WHERE c.student_id=:sid");
         $result->bindParam(':sid',$id);
         $result->execute();
-    
+		
+    //get number of hours taking now for major
 	$result = $conn->prepare("SELECT SUM(credit_hours) FROM (
                                 SELECT p.dept_id,p.course_id,h.credit_hours 
                                 FROM program_courses p
-                                INNER JOIN major_now h
+                                INNER JOIN courses_now h
                                 ON h.dept_id=p.dept_id AND h.course_id=p.course_id
                                 WHERE p.program_id=:pid AND p.concentration_id=:conid AND p.fulfills_major=1) AS major_taking");
     $result->bindParam(':pid',$program);
     $result->bindParam(':conid',$concentration);
 	$result->execute();
 	$major_hours_now = $result->fetchColumn();
+	
+	//get hours taking now for math option
+    if($math_option === 1)
+	{
+		$result = $conn->prepare("SELECT SUM(credit_hours) FROM (
+									SELECT p.dept_id,p.course_id,h.credit_hours 
+									FROM program_courses p
+									INNER JOIN courses_now h
+									ON h.dept_id=p.dept_id AND h.course_id=p.course_id
+									WHERE p.program_id=:pid AND p.concentration_id=:conid AND p.fulfills_math1=1) AS math_taking");
+		$result->bindParam(':pid',$program);
+		$result->bindParam(':conid',$concentration);
+		$result->execute();
+		$math_hours_now = $result->fetchColumn();
+	}
+	else //math option is 2
+	{
+		$result = $conn->prepare("SELECT SUM(credit_hours) FROM (
+									SELECT p.dept_id,p.course_id,h.credit_hours 
+									FROM program_courses p
+									INNER JOIN courses_now h
+									ON h.dept_id=p.dept_id AND h.course_id=p.course_id
+									WHERE p.program_id=:pid AND p.concentration_id=:conid AND p.fulfills_math2=1) AS math_taking");
+		$result->bindParam(':pid',$program);
+		$result->bindParam(':conid',$concentration);
+		$result->execute();
+		$math_hours_now = $result->fetchColumn();
+	}
     
     //get hours taking now for science
-     $result = $conn->prepare("CREATE OR REPLACE VIEW science_now (dept_id,course_id,credit_hours) AS
-                                SELECT c.dept_id,c.course_id,p.credit_hours 
-                                FROM courses_taking_now c
-                                INNER JOIN course_list p
-                                ON p.dept_id=c.dept_id AND p.course_id=c.course_id
-                                WHERE c.student_id=:sid");
-        $result->bindParam(':sid',$id);
-        $result->execute();
-
 	$result = $conn->prepare("SELECT SUM(credit_hours) FROM (
                                 SELECT p.dept_id,p.course_id,h.credit_hours 
                                 FROM program_courses p
-                                INNER JOIN science_now h
+                                INNER JOIN courses_now h
                                 ON h.dept_id=p.dept_id AND h.course_id=p.course_id
                                 WHERE p.program_id=:pid AND p.concentration_id=:conid AND p.fulfills_science=1) AS 
                                 science_taking");
@@ -399,20 +455,11 @@ if($rows > 0)
     $result->bindParam(':conid',$concentration);$result->execute();
 	$science_hours_now = $result->fetchColumn();
     
-    //get hours taking now for social science
-     $result = $conn->prepare("CREATE OR REPLACE VIEW social_now (dept_id,course_id,credit_hours) AS
-                                SELECT c.dept_id,c.course_id,p.credit_hours 
-                                FROM courses_taking_now c
-                                INNER JOIN course_list p
-                                ON p.dept_id=c.dept_id AND p.course_id=c.course_id
-                                WHERE c.student_id=:sid");
-        $result->bindParam(':sid',$id);
-        $result->execute();
-    
+    //get hours taking now for social science   
 	$result = $conn->prepare("SELECT SUM(credit_hours) FROM (
                                 SELECT p.dept_id,p.course_id,h.credit_hours 
                                 FROM program_courses p
-                                INNER JOIN social_now h
+                                INNER JOIN courses_now h
                                 ON h.dept_id=p.dept_id AND h.course_id=p.course_id
                                 WHERE p.program_id=:pid AND p.concentration_id=:conid AND p.fulfills_social_science=1) 
                                 AS social_taking");
@@ -421,19 +468,10 @@ if($rows > 0)
 	$social_hours_now = $result->fetchColumn();
     
     //get hours taking now for liberal ed
-     $result = $conn->prepare("CREATE OR REPLACE VIEW liberal_now (dept_id,course_id,credit_hours) AS
-                                SELECT c.dept_id,c.course_id,p.credit_hours 
-                                FROM courses_taking_now c
-                                INNER JOIN course_list p
-                                ON p.dept_id=c.dept_id AND p.course_id=c.course_id
-                                WHERE c.student_id=:sid");
-        $result->bindParam(':sid',$id);
-        $result->execute();
-
 	$result = $conn->prepare("SELECT SUM(credit_hours) FROM (
                                 SELECT p.dept_id,p.course_id,h.credit_hours 
                                 FROM program_courses p
-                                INNER JOIN liberal_now h
+                                INNER JOIN courses_now h
                                 ON h.dept_id=p.dept_id AND h.course_id=p.course_id
                                 WHERE p.program_id=:pid AND p.concentration_id=:conid AND p.fulfills_liberalEd=1) AS 
                                 liberal_taking");
@@ -441,29 +479,20 @@ if($rows > 0)
     $result->bindParam(':conid',$concentration);$result->execute();
 	$liberal_hours_now = $result->fetchColumn();
     
-        //get hours taking now for communications
-     $result = $conn->prepare("CREATE OR REPLACE VIEW comm_now (dept_id,course_id,credit_hours) AS
-                                SELECT c.dept_id,c.course_id,p.credit_hours 
-                                FROM courses_taking_now c
-                                INNER JOIN course_list p
-                                ON p.dept_id=c.dept_id AND p.course_id=c.course_id
-                                WHERE c.student_id=:sid");
-        $result->bindParam(':sid',$id);
-        $result->execute();
-
-	$result = $conn->prepare("SELECT SUM(credit_hours) FROM (
+     //get hours taking now for communications
+     $result = $conn->prepare("SELECT SUM(credit_hours) FROM (
                                 SELECT p.dept_id,p.course_id,h.credit_hours 
                                 FROM program_courses p
-                                INNER JOIN comm_now h
+                                INNER JOIN courses_now h
                                 ON h.dept_id=p.dept_id AND h.course_id=p.course_id
                                 WHERE p.program_id=:pid and p.concentration_id=:conid AND
-                                p.fulfills_writing=1) AS comm_taking");
+                                p.fulfills_writing_communications=1) AS comm_taking");
 	$result->bindParam(':pid',$program);
     $result->bindParam(':conid',$concentration);$result->execute();
 	$comm_hours_now = $result->fetchColumn();
     
-    //get hours planning for major
-     $result = $conn->prepare("CREATE OR REPLACE VIEW major_plan (dept_id,course_id,credit_hours) AS
+    //get hours student is planning for all categories
+     $result = $conn->prepare("CREATE OR REPLACE VIEW course_plan (dept_id,course_id,credit_hours) AS
                                 SELECT c.dept_id,c.course_id,p.credit_hours 
                                 FROM courses_planning c
                                 INNER JOIN course_list p
@@ -471,32 +500,52 @@ if($rows > 0)
                                 WHERE c.student_id=:sid");
         $result->bindParam(':sid',$id);
         $result->execute();
-    
+		
+    //get hours student is planning in major
 	$result = $conn->prepare("SELECT SUM(credit_hours) FROM (
                                 SELECT p.dept_id,p.course_id,h.credit_hours 
                                 FROM program_courses p
-                                INNER JOIN major_plan h
+                                INNER JOIN course_plan h
                                 ON h.dept_id=p.dept_id AND h.course_id=p.course_id
                                 WHERE p.program_id=:pid AND p.concentration_id=:conid AND p.fulfills_major=1) AS 
                                 major_planning");
 	$result->bindParam(':pid',$program);
     $result->bindParam(':conid',$concentration);$result->execute();
 	$major_hours_plan = $result->fetchColumn();
+	
+	//get hours planning for math option
+    if($math_option === 1)
+	{
+		$result = $conn->prepare("SELECT SUM(credit_hours) FROM (
+									SELECT p.dept_id,p.course_id,h.credit_hours 
+									FROM program_courses p
+									INNER JOIN course_plan h
+									ON h.dept_id=p.dept_id AND h.course_id=p.course_id
+									WHERE p.program_id=:pid AND p.concentration_id=:conid AND p.fulfills_math1=1) AS math_taking");
+		$result->bindParam(':pid',$program);
+		$result->bindParam(':conid',$concentration);
+		$result->execute();
+		$math_hours_plan = $result->fetchColumn();
+	}
+	else //math option is 2
+	{
+		$result = $conn->prepare("SELECT SUM(credit_hours) FROM (
+									SELECT p.dept_id,p.course_id,h.credit_hours 
+									FROM program_courses p
+									INNER JOIN course_plan h
+									ON h.dept_id=p.dept_id AND h.course_id=p.course_id
+									WHERE p.program_id=:pid AND p.concentration_id=:conid AND p.fulfills_math2=1) AS math_taking");
+		$result->bindParam(':pid',$program);
+		$result->bindParam(':conid',$concentration);
+		$result->execute();
+		$math_hours_plan = $result->fetchColumn();
+	}
     
     //get hours taking plan for science
-     $result = $conn->prepare("CREATE OR REPLACE VIEW science_plan (dept_id,course_id,credit_hours) AS
-                                SELECT c.dept_id,c.course_id,p.credit_hours 
-                                FROM courses_planning c
-                                INNER JOIN course_list p
-                                ON p.dept_id=c.dept_id AND p.course_id=c.course_id
-                                WHERE c.student_id=:sid");
-        $result->bindParam(':sid',$id);
-        $result->execute();
-
-	$result = $conn->prepare("SELECT SUM(credit_hours) FROM (
+     $result = $conn->prepare("SELECT SUM(credit_hours) FROM (
                                 SELECT p.dept_id,p.course_id,h.credit_hours 
                                 FROM program_courses p
-                                INNER JOIN science_plan h
+                                INNER JOIN course_plan h
                                 ON h.dept_id=p.dept_id AND h.course_id=p.course_id
                                 WHERE p.program_id=:pid AND p.concentration_id=:conid AND p.fulfills_science=1) AS     
                                 science_planning");
@@ -505,19 +554,10 @@ if($rows > 0)
 	$science_hours_plan = $result->fetchColumn();
     
     //get hours planning plan for social science
-     $result = $conn->prepare("CREATE OR REPLACE VIEW social_plan (dept_id,course_id,credit_hours) AS
-                                SELECT c.dept_id,c.course_id,p.credit_hours 
-                                FROM courses_planning c
-                                INNER JOIN course_list p
-                                ON p.dept_id=c.dept_id AND p.course_id=c.course_id
-                                WHERE c.student_id=:sid");
-        $result->bindParam(':sid',$id);
-        $result->execute();
-    
 	$result = $conn->prepare("SELECT SUM(credit_hours) FROM (
                                 SELECT p.dept_id,p.course_id,h.credit_hours 
                                 FROM program_courses p
-                                INNER JOIN social_plan h
+                                INNER JOIN course_plan h
                                 ON h.dept_id=p.dept_id AND h.course_id=p.course_id
                                 WHERE p.program_id=:pid AND p.concentration_id=:conid AND p.fulfills_social_science=1) 
                                 AS social_taking");
@@ -526,19 +566,10 @@ if($rows > 0)
 	$social_hours_plan = $result->fetchColumn();
     
     //get hours taking plan for liberal ed
-     $result = $conn->prepare("CREATE OR REPLACE VIEW liberal_plan (dept_id,course_id,credit_hours) AS
-                                SELECT c.dept_id,c.course_id,p.credit_hours 
-                                FROM courses_planning c
-                                INNER JOIN course_list p
-                                ON p.dept_id=c.dept_id AND p.course_id=c.course_id
-                                WHERE c.student_id=:sid");
-        $result->bindParam(':sid',$id);
-        $result->execute();
-
-	$result = $conn->prepare("SELECT SUM(credit_hours) FROM (
+     $result = $conn->prepare("SELECT SUM(credit_hours) FROM (
                                 SELECT p.dept_id,p.course_id,h.credit_hours 
                                 FROM program_courses p
-                                INNER JOIN liberal_plan h
+                                INNER JOIN course_plan h
                                 ON h.dept_id=p.dept_id AND h.course_id=p.course_id
                                 WHERE p.program_id=:pid AND p.concentration_id=:conid AND p.fulfills_liberalEd=1) AS 
                                 liberal_taking");
@@ -546,27 +577,45 @@ if($rows > 0)
     $result->bindParam(':conid',$concentration);$result->execute();
 	$liberal_hours_plan = $result->fetchColumn();
     
-        //get hours taking plan for communications
-     $result = $conn->prepare("CREATE OR REPLACE VIEW comm_plan (dept_id,course_id,credit_hours) AS
-                                SELECT c.dept_id,c.course_id,p.credit_hours 
-                                FROM courses_planning c
-                                INNER JOIN course_list p
-                                ON p.dept_id=c.dept_id AND p.course_id=c.course_id
-                                WHERE c.student_id=:sid");
-        $result->bindParam(':sid',$id);
-        $result->execute();
-
-	$result = $conn->prepare("SELECT SUM(credit_hours) FROM (
+    //get hours taking plan for communications
+    $result = $conn->prepare("SELECT SUM(credit_hours) FROM (
                                 SELECT p.dept_id,p.course_id,h.credit_hours 
                                 FROM program_courses p
-                                INNER JOIN comm_plan h
+                                INNER JOIN course_plan h
                                 ON h.dept_id=p.dept_id AND h.course_id=p.course_id
-                                WHERE p.program_id=:pid AND p.concentration_id=:conid AND p.fulfills_communications=1) 
+                                WHERE p.program_id=:pid AND p.concentration_id=:conid AND p.fulfills_writing_communications=1) 
                                 AS comm_planning");
 	$result->bindParam(':pid',$program);
     $result->bindParam(':conid',$concentration);$result->execute();
 	$comm_hours_plan = $result->fetchColumn();
-    
+	
+	//get the total of completed hours for each category
+	$total_completed_hours = 
+		$completed_major_hours +
+		$completed_math_hours[0] +
+		$completed_science_hours +
+		$completed_social_science_hours +
+		$completed_liberal_hours +
+		$completed_communication_hours;
+		
+	//get the total of hours taking now for each category
+	$total_hours_now = 
+		$major_hours_now +
+		$math_hours_now +
+		$science_hours_now +
+		$social_hours_now +
+		$liberal_hours_now +
+		$comm_hours_now;
+	
+	//get the total of hours planning for each category
+	$total_hours_plan = 
+		$major_hours_plan +
+		$math_hours_plan +
+		$science_hours_plan +
+		$social_hours_plan +
+		$liberal_hours_plan +
+		$comm_hours_plan;
+		
 }
    
 	//create array for progress bars
@@ -604,7 +653,7 @@ if($rows > 0)
     <meta name="author" content="">
     <link rel="icon" href="../../favicon.ico">
 
-    <title>UNCC CCI Vitural Advisor</title>
+    <title>UNCC CCI Virtual Advisor</title>
 
     <!-- Bootstrap core CSS -->
     <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -665,7 +714,7 @@ if($rows > 0)
 					drawBorder: false,
 					shadow: false}
 			};
-			 $.jqplot('myChart', [data,data2,data3],options);
+			 $.jqplot('myChart', [data1,data2,data3],options);
 		});
 	</script>
 	

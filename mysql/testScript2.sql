@@ -144,3 +144,12 @@ SELECT SUM(credit_hours) FROM (
 
 DELETE FROM courses_planning where student_id = '800726001' and dept_id = 'UWRT' and course_id = '1103';
 
+SHOW FULL TABLES IN Virtual_adviser3 WHERE TABLE_TYPE LIKE 'VIEW';
+
+select * from courses_taking_now where student_id = '800726001';
+
+select * from program_courses where fulfills_communications = 1;
+
+ALTER TABLE program_courses DROP fulfills_communications;
+ALTER TABLE program_courses CHANGE fulfills_writing_communicationsn fulfills_writing_communications TINYINT;
+
